@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Invoice Page</title>
+    <style>
+
+#a4-content,#a4-content1 {
+    margin: 0;
+}
+
+@media print {
+    #a4-content,#a4-content1 {
+        margin-top: 0; /* Remove any margin on print */
+        padding-top: 0; /* Remove padding at the top */
+    }
+}
+
+
+
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Aligns items to the top */
+    height: 150vh;
+    background-color: #f0f0f0;
+}
+
+.a4-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+}
+
+.a4-sheet {
+    height: 198mm; /* A4 width */
+    width: 285mm; /* A4 height */
+    border: 2px solid #339b8a; /* Border width and color */
+    background-color: white; /* Background color */
+    padding: 20px; /* Padding inside the sheet */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+    margin-top: 20px; /* Top margin for spacing */
+    position: relative; /* Set position relative for absolute children */
+}
+
+        #line1 {
+            position: absolute;
+            top: 3cm; /* Position the line 5.2 cm from the top */
+            left: 50%; /* Position the line in the center */
+            transform: translateX(-50%); /* Center the line */
+            width: 100%; /* Line width */
+            height: 1px; /* Line thickness */
+            background-color: #000; /* Line color */
+        }
+       
+
+        #line2 {
+            position: absolute;
+            top: 6cm; /* Position the line 5.2 cm from the top */
+            left: 50%; /* Position the line in the center */
+            transform: translateX(-50%); /* Center the line */
+            width: 100%; /* Line width */
+            height: 1px; /* Line thickness */
+            background-color: #000; /* Line color */
+        }
+
+        #line3 {
+            position: absolute;
+            top:7.8cm; /* Position the line 5.2 cm from the top */
+            left: 50%; /* Position the line in the center */
+            transform: translateX(-50%); /* Center the line */
+            width: 100%; /* Line width */
+            height: 1px; /* Line thickness */
+            background-color: #000; /* Line color */
+        }
+
+        
+        #sai_image{
+            height: 95px;
+            width: 80px;
+            margin-top: -10px;
+        }
+
+        .header {
+            text-align: center; /* Center align the header */
+            margin-top: -105px;
+            margin-left: 50px;
+            font-size: 33px; /* Font size for the header */
+            color: #339b8a;
+            
+        }
+        .subheader {
+            text-align: center; /* Center align the subheader */
+            font-size: 18px; /* Font size for the subheader */
+            font-weight: bold;
+            margin-top: 0px; /* Space above the subheader */
+            font-style: oblique;
+        }
+        
+        .contact-info {
+            text-align: center; /* Center align the contact information */
+            font-size: 17px; /* Font size for the contact info */
+            margin-top: -10px;
+            margin-left: 30px;
+           font-style: oblique;
+           font-variant: inherit;
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        label {
+    display: inline-block;
+    width: 70px;
+    margin-top: 8px;
+    text-align:  left;
+    margin-left: 5px; 
+    position: relative;   
+}
+
+label::after {
+    content: ":";
+    position: absolute;
+    right: 0; /* Align the colon to the right edge of the label */
+  }
+
+
+/* Remove outline from input fields */
+  input[type="text"] {
+    margin-left: 5px;
+    width: 150px;
+    margin-top: 0px;
+    font-weight: 500;
+    border: 1px solid white; /* Add a border if needed */
+    padding: 3px;
+    border-radius: 4px;
+    text-align: left;
+  }
+
+  /* Optional: Add focus effect if you want */
+  input[type="text"]:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+     
+
+
+  select {
+    margin-left: 5px;
+    width: 150px;
+    margin-top: 0px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid white; /* Add a border if needed */
+    padding: 3px;
+    border-radius: 4px;
+    background-image: linear-gradient(45deg, transparent 50%, rgb(217, 214, 214) 50%),
+                      linear-gradient(135deg, rgb(211, 209, 209) 50%, transparent 50%);
+    background-position: calc(100% - 12px) calc(1.4em), calc(100% - 8px) calc(1.4em);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    appearance: none; /* Remove default browser styling */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+}
+
+
+
+
+
+
+       
+
+       
+        .container-1{
+            height: 30px;
+            width:195mm;
+            margin-top: -20px;
+            margin-left: 18%;
+           
+        }
+        .container1_subheader1 {
+            margin-left: 5px;
+            font-size: 25px; /* Font size for the subheader */
+            font-weight:  bold;
+            margin-top: 10px; /* Space above the subheader */
+            
+            font-style: oblique;
+            text-align: center;
+        }
+
+       
+       
+        .container-2{
+            height: 110px;
+            width: 213mm;
+            margin-top: 0px;
+            margin-left: 0px;
+            /* background-color: red; */
+        }
+       
+        #container2_textarea{
+            height: 100px;
+            width:300px; 
+            border: 1px solid white; /* Add a border if needed */
+           font-weight: 400;
+           font-size: 12px;
+           font-style: normal;
+           font-variant: inherit;
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+        }
+        .container_subheader3{
+            /* background-color: blue; */
+            margin-left: 310px;
+            margin-top: -110px;
+            height: 110px;
+            width: 250px;
+        }
+        .container_subheader4{
+            /* background-color: yellow; */
+            margin-left: 560px;
+            margin-top: -110px;
+            height: 110px;
+            width: 250px;
+        }
+        .container-3{
+            height: 110px;
+            width: 72mm;
+            margin-top: -110px;
+            margin-left: 214mm;
+            /* background-color: gray; */
+        }
+        .container-4{
+            height: 70px;
+            width: 100%;
+            margin-top: 5px;
+        }
+        .container4_subheader1{
+            margin-left: 5px;
+           font-size: 17px;
+            
+        }
+        .container4_subheader2{
+            margin-left: 30px;
+           margin-top: 5px;
+            
+        }
+        .container-5{
+            height: 400px;
+            width: 100%;
+            margin-top: 5px;
+            border: 1px solid black;
+        }
+       
+        .container-6{
+            height: 210px;
+            width: 100%;
+            border: 1px solid black;
+        }
+        .vertical-line {
+            position: absolute;
+           margin-top: -200px;
+            left: 65%;
+            height: 5.5cm;
+            width: 1px;
+            background-color: black;
+            transform: translateX(-50%); /* This centers the line exactly */
+        }
+        .container6_subclass6{
+            height: 200px;
+            width: 65%;
+            margin-top: -15px;
+        }
+        .container6_subclass6 p {
+            font-size: 13px; /* Adjust font size as needed */
+            margin-top: 15px;
+            margin-left: 10px;
+            line-height: 1; /* Adjust line height as needed */
+        }
+        .container6_subclass62{
+            height: 200px;
+            margin-left: 65%;
+            margin-top: -200px;
+        }
+        .container6_subclass62 label {
+    margin-left: 10px; /* Keep your margin-left */
+    width: 200px; /* Keep your desired width */
+    font-size: 14px;
+    text-align: center; /* Align text to center */
+    display: inline-block; /* Ensures proper alignment with inputs */
+    margin-bottom: -5px; /* Reduce gap below each label */
+}
+
+.container6_subclass62 input {
+    margin-bottom: -5px; /* Reduce gap below each input field */
+}
+
+
+        .container-7{
+            height: 200px;
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid black;
+        }
+
+        .container-7 label{
+            width: 150px;
+        }
+
+        .container-8{
+            height: 200px;
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid black;
+        }
+        .container-81{
+            height: 200px;
+            width: 50%;
+            margin-top: 0px;
+           
+           
+        }
+        .container-82{
+            height: 200px;
+            width: 50%;
+            margin-top: -200px;
+            margin-left: 50%;
+        }
+        .container-82 input{
+            width: 200px;
+           font-weight: bold;
+            margin-left: 20px;
+            margin-top: 10px;
+            height: 50px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+
+.footer-content p {
+    margin: 0; /* Removes default margin from <p> */
+    flex: 1; /* Ensures equal spacing between items */
+    text-align: center; /* Centers text within each section */
+}
+
+.footer-content .left {
+    text-align: left; /* Aligns the first <p> to the left */
+}
+
+.footer-content .center {
+    text-align: center; /* Aligns the second <p> to the center */
+}
+
+.footer-content .right {
+    text-align: right; /* Aligns the third <p> to the right */
+}
+
+table{
+    border: 1px solid rgb(212, 210, 210);
+}
+th, td {
+    border: 1px solid rgb(212, 210, 210);
+    padding: 0px;
+    margin: 0;
+    text-align: center;
+}
+td{
+    height: 35px;
+}
+#tableBody-1 input{
+    width: 100%;
+    height: 100%;
+     box-sizing: border-box;
+      margin-left: 0px;
+      margin-top: 0px;
+      text-align: center;
+}
+
+#amount_ok_btn{
+    height: 30px;
+    width: 80px;
+    margin-left: 90%;
+    text-align: center;
+    font-weight: bold;
+    background-color: red;
+    color: white;
+    margin-top: 10px;
+}
+
+.button-container {
+        height: 50px;
+        width: 150px;
+        margin-top: 10px;
+        margin-left: 50px;
+        background-color: green;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    #notification {
+    display: none;
+    position: fixed;    
+    top: 40%;
+    left: 40%;
+    height: 120px;
+    width: 350px;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
+    border: 2px solid black;
+}
+
+
+
+    </style>
+</head>
+<body>
+
+   
+    <div id="notification"></div>
+    <div class="a4-container">
+        
+        <div class="a4-sheet" id="a4-content">
+            <div class="container-0">
+                <img id="sai_image" src="{% static 'images/sai.jpg' %}" alt="SAI Accurate Instruments">
+        
+            <div class="header"><strong>SAI ACCURATE INSTRUMENTS</strong></div>
+            
+            <div class="contact-info">
+                <p>54 GVT COMPLEX, NAZARATHPET, CHENNAI-600123<br>
+                E-Mail: saiaccurate@gmail.com | www.saiaccurate.com |
+                PH: 9344438999 / 97 87 37 5999</p>
+            </div>
+            </div>
+            
+
+            <div class="line" id="line1"></div> 
+
+        <div class="container-1">
+            <div class="container1_subheader1">Order Acknowledgement Cum Proforma Invoice</div> 
+        </div>
+
+        <div class="container-2">
+            <div class="container_subheader2" > 
+                <textarea id="container2_textarea">TO:{{ common_data.customer_address }}</textarea>   
+            </div> 
+            <div class="container_subheader3" >
+                <label for="contact_person">Kind Attn</label>
+                <select id="contact_person" name="contact_person">
+                    {% if customer_details %}
+                        <option value="{{ customer_details.primary_contact_person }}">{{ customer_details.primary_contact_person }}</option>
+                        <option value="{{ customer_details.secondary_contact_person }}">{{ customer_details.secondary_contact_person }}</option>
+                    {% else %}
+                        <option value="">No contact persons available</option>
+                    {% endif %}
+                </select>
+                <br>
+
+                <label for="dept">Dept</label>
+                <select id="dept" name="dept">
+                    {% if customer_details %}
+                        <option value="{{ customer_details.primary_dept }}">{{ customer_details.primary_dept }}</option>
+                        <option value="{{ customer_details.secondary_dept }}">{{ customer_details.secondary_dept }}</option>
+                    {% else %}
+                        <option value="">No departments available</option>
+                    {% endif %}
+                </select>
+                <br>
+
+                <label for="phone_no">Phone No</label>
+                <select id="phone_no" name="phone_no">
+                    {% if customer_details %}
+                        <option value="{{ customer_details.primary_phone_no }}">{{ customer_details.primary_phone_no }}</option>
+                        <option value="{{ customer_details.secondary_phone_no }}">{{ customer_details.secondary_phone_no }}</option>
+                    {% else %}
+                        <option value="">No phone numbers available</option>
+                    {% endif %}
+                </select>
+                <br>
+                </div>
+            </div>
+            <div class="container_subheader4" >
+                <label for="work_order_no">WO No</label>
+                <input type="text" id="work_order_no" name="work_order_no"><br>
+                
+                <label for="work_order_date">WO Date</label>
+                <input type="text" id="work_order_date" name="work_order_date"value="{{ common_data.wo_date }}" ><br>
+
+            </div>
+
+        <div class="container-3">
+            <label for="subject" style="font-weight: bold;">Subject</label>
+            <input type="text" id="subject" name="subject" style="font-weight: bold;" value="{{ common_data.order_type }}"><br>
+
+            <label for="po_no">PO No</label>
+            <input type="text" id="po_no" name="po_no" value="{{ common_data.customer_po_no }}" ><br>
+        
+            <label for="po_date">PO Date</label>
+            <input type="text" id="po_date" name="po_date"  value="{{ common_data.customer_ref_date }}" ><br>
+        </div>
+
+        <div class="line" id="line2"></div>
+        
+        <div class="container-4">
+            <div class="container4_subheader1">Respected Sir / Madam,</div> 
+            <div class="container4_subheader2">With thanks, We kindly inform that your order given through above reference 
+                has been acknowledged / registered by us and will be processd for execution with below mentioned terms.</div> 
+        </div>
+        <div class="line" id="line3"></div>
+
+        <div class="container-5" id="content-container">
+            <table border="1" cellpadding="11" cellspacing="0" style="width: 100%; text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="width: 5px;">Sr.No</th>
+                        <th style="width: 10%;">Code/Sr.No</th>
+                        <th style="width: 20%;">Item</th>
+                        <th style="width: 10%;">HSN</th>
+                        <th style="width: 10%;">SI.No</th>
+                        <th style="width: 10%;">ID.No</th>
+                        <th style="width: 6%;">Range</th>
+                        <th style="width: 8%;">Make</th>
+                        <th style="width: 5%;">Qty</th>
+                        <th style="width: 5%;">Unit</th>
+                        <th style="width: 7%;">Rate</th>
+                        <th style="width: 10%;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody-1">
+                    {% for item in specific_items %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><input type="text"></td>
+                        <td>
+                            <textarea style="width: 95%; resize: none;border-color: white;font-family: 'Times New Roman';" readonly>{{ item.item }}</textarea>
+                        </td>
+                        <td><input type="text" value="{{ item.hsn }}"></td>
+                        <td><input type="text" value="{{ item.sr_no }}"></td>
+                        <td><input type="text" value="{{ item.id_no }}"></td>
+                        <td><input type="text" value="{{ item.range }}"></td>
+                        <td><input type="text" value="{{ item.make }}"></td>
+                        <td><input type="text" name="qty" class="qty" step="any"></td>
+                        <td>
+                            <select name="unit" style="width: 100%; height: 100%; margin-left: 0px; margin-top: 0px;">
+                                <option value="No">No</option>
+                                <option value="Set">Set</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="rate" class="rate" step="any"></td>
+                        <td><input type="text" name="amount" class="amount" readonly></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+        
+
+       
+
+
+        <footer style="position: absolute; bottom: 0; width: 97%; height: 30px; background-color: #f1f1f1;">
+            <div class="footer-content" style="display: flex; justify-content: space-between; ">
+                <p class="left">SAI/REC/032</p>
+                <p class="center">Page 1 of 2</p>
+                <p class="right">Rev.No.:0 Date:01/10/2014</p>
+            </div>
+        </footer>
+        
+        </div>
+
+
+
+        <div id="dynamicContent" style="display: none;">
+
+        <div class="a4-sheet" id="a4-content1" style="margin-top: 2px;">
+            
+            <div class="container-6">
+                <div class="container6_subclass6">
+                    <p>Note for in case of calibration:</p>
+                    <p>1. If the physical condition of iyem on receipt is NOT OK,which will not be undertaken for calibration.</p>
+                    <p>2.Next Due Date,Item Code No,Gauge Acceptance Status and End use address will be mentioned in calibration certificate
+                        based on your reference evident only.</p>
+                    <p>3.Items,if any out of our calibration scope due to insufficient capability and resources,are highlighted on foot note.</p>
+                    <p>4.Calibration methods are based on either National/International Standard or our In-house procedure.</p>
+                    <p>5.Partial delivery / Later changes in order / Electronic transmission of certificates are not acceptable.</p>
+                    <p style="font-weight: bold;font-size: 14px;">If any further clarification is needed , Please contact us for immediate response.</p>
+                    
+                </div>
+                <div class="vertical-line"></div>
+                <div class="container6_subclass62" >
+                    <label for="total_amount" >Total Amount</label>
+                    <input type="text" id="total_amount" name="total_amount"><br>
+                    <label for="install_charge">Installation Charge</label>
+                    <input type="text" id="install_charge" name="install_charge"><br>
+                    <label for="pack_charge">Pack / Forward Charges</label>
+                    <input type="text" id="pack_charge" name="pack_charge"><br>
+                    <label for="sgst">Add SGST 9%</label>
+                    <input type="text" id="sgst" name="sgst"><br>
+                    <label for="cgst">Add CGST 9%</label>
+                    <input type="text" id="cgst" name="cgst"><br>
+                    <label for="igst">Add IGST 18%</label>
+                    <input type="text" id="igst" name="igst"><br>
+                    <label for="net_amount" style="font-weight: bold;font-size: 16px;">Net Amount</label>
+                    <input type="text" id="net_amount" name="net_amount" style="font-weight: bold;font-size: 16px;"><br>
+                </div>
+            </div>
+            <button type="button" class="amount_ok_btn" id="amount_ok_btn" >OK</button>
+            <div class="container-7">
+                <p style="font-weight: bold;">TERMS AND CONDITIONS:</p>
+                <label for="payment_term" style="width :150px;margin-top: -5px;">Payment Term</label>
+                <select id="payment_term" name="payment_term" style="width: 400px;height: 25px;">
+                    <option value="" disabled selected>Select Payment Term</option>
+                    <option value="1">50% Advance 50% Against Proforma Invoice</option>
+                    <option value="2">50% Advance 50% Against PDI</option>
+                    <option value="3">100% Against Invoice</option>
+                    <option value="4">100% Against Invoice 30 Days</option>
+                    <option value="5">100% Against Invoice 45 Days</option>
+                </select><br>
+                <label for="receipt_date">Item Receipt Date</label>
+                <input type="date" id="receipt_date" name="receipt_date" >
+                <label for="delivery_date" style="margin-left: 30%;">Delivery commited on</label>
+                <input type="date" id="delivery_date" name="delivery_date"><br>
+
+                <label for="next_due"  style="width: 250px;">Next Due Date to be Reported</label>
+                <input type="text" id="next_due" name="next_due" value="YES Only Master">
+                <label for="despatch_mode" style="margin-left: 17%;">Despatch Mode</label>
+                <select id="despatch_mode" name="despatch_mode" style="width: 200px;height: 25px;">
+                    <option value="" disabled selected>Select Despatch Mode</option>
+                    <option value="1">1 Week</option>
+                    <option value="2">2-3 Weeks</option>
+                    <option value="3">4-5 Weeks</option>
+                    <option value="4">6-8 Weeks</option>
+                </select><br>
+                <label for="foot_note">Foot Note</label>
+                <input type="text"  id="foot_note" name="foot_note" style="width: 70%;height: 30px;">
+            </div>
+
+            <div class="container-8">
+                <div class="container-81">
+                    <p style="font-weight: bold;">ACKNOWLEDGEMENT BY CUSTOMER:</p>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name">
+                    <label for="date_cus">Date</label>
+                    <input type="text" id="date_cus" name="date_cus"><br>
+                    <label for="thro">Thro'</label>
+                    <input type="text" id="thro" name="thro" value="Email / Phone / P.O. / Direct" style="width: 300px;"><br>    
+                </div>
+               <div class="container-82">
+                <p style="font-weight: bold;margin-top: -20px;font-size: 20px;text-align: center;">FOR SAI ACCURATE INSTRUMENTS</p>
+
+                <input type="text" id="prepared_by" >
+                <input type="text" id="authorised_by" style="margin-left: 30px;" ><br>
+                <p style="margin-left: 100px;margin-top: 0px;">PREPARED BY</p>
+                <p style="margin-left: 300px;margin-top: -35px;">REVIEWED / AUTHORISED BY</p>
+               </div>
+
+            </div>
+
+
+            <footer style="position: absolute; bottom: 0; width: 97%; height: 30px; background-color: #f1f1f1;">
+                <div class="footer-content" style="display: flex; justify-content: space-between; ">
+                    <p class="left">SAI/REC/032</p>
+                    <p class="center">Page 2 of 2</p>
+                    <p class="right">Rev.No.:0 Date:01/10/2014</p>
+                </div>
+            </footer>
+        </div>
+        
+    </div>
+       
+    </div>
+
+    <button class="button-container"  onclick="downloadPDF()">Download as PDF</button>  
+
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<script>
+function downloadPDF() {
+    const a4Container = document.querySelector('.a4-container'); // Select the container
+    const button = document.querySelector('#amount_ok_btn'); // Select the button
+
+    // Temporarily hide the button
+    if (button) {
+        button.style.display = 'none';
+    }
+
+    // Get the value from the 'work_order_no' input field
+    const workOrderNo = document.querySelector('#work_order_no').value.trim();
+
+    // Set the filename dynamically based on the work order number
+    const filename = workOrderNo ? `${workOrderNo}_document.pdf` : 'document.pdf';
+
+    // Define the options for html2pdf
+    const opt = {
+        margin: 0,
+        filename: filename, // Use the dynamically generated filename
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 }, // Higher scale for better quality
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+
+    // Use html2pdf to generate the PDF
+    html2pdf().set(opt).from(a4Container).save().then(() => {
+        // Restore the button's visibility after generating the PDF
+        if (button) {
+            button.style.display = '';
+        }
+    });
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const container = document.querySelector(".a4-container");
+    const tableBody = container.querySelector("#tableBody-1");
+    const rows = tableBody.querySelectorAll("tr");
+
+    let maxHeight = 400; // Initial height of the first page
+    let currentPage = 1;
+    let pagesCreated = false; // Track if new pages are created
+    let totalPages = 1; // Default to 1 until pages are created
+
+    function createNewPage() {
+        const newPage = document.createElement("div");
+        newPage.className = "a4-sheet";
+        newPage.id = `a4-content${currentPage}`;
+        newPage.style.margin = "0"; // Remove any outer margin
+        newPage.innerHTML = `
+            <div class="container-5" style="height:600px">
+                <table border="1" cellpadding="11" cellspacing="0" style="width: 100%; text-align: center;">
+                    <thead>
+                        <tr>
+                            <th style="width: 5px;">Sr.No</th>
+                            <th style="width: 10%;">Code/Sr.No</th>
+                            <th style="width: 20%;">Item</th>
+                            <th style="width: 10%;">HSN</th>
+                            <th style="width: 10%;">SI.No</th>
+                            <th style="width: 10%;">ID.No</th>
+                            <th style="width: 6%;">Range</th>
+                            <th style="width: 8%;">Make</th>
+                            <th style="width: 5%;">Qty</th>
+                            <th style="width: 5%;">Unit</th>
+                            <th style="width: 7%;">Rate</th>
+                            <th style="width: 10%;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody-${currentPage}">
+                    </tbody>
+                </table>
+            </div>
+            <footer style="position: absolute; bottom: 0; width: 97%; height: 30px; background-color: #f1f1f1;">
+                <div class="footer-content" style="display: flex; justify-content: space-between;">
+                    <p class="left">SAI/REC/032</p>
+                    <p class="center">Page ${currentPage} of 1</p>
+                    <p class="right">Rev.No.:0 Date:01/10/2014</p>
+                </div>
+            </footer>
+        `;
+        container.appendChild(newPage);
+
+        // Add dynamic CSS for this page's tableBody
+        const style = document.createElement("style");
+        style.innerHTML = `
+            #tableBody-${currentPage} input {
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                margin-left: 0;
+                margin-top: 0;
+                text-align: center;
+            }
+        `;
+        document.head.appendChild(style);
+
+        return newPage.querySelector(`#tableBody-${currentPage}`);
+    }
+
+    let currentContainer = tableBody;
+    let currentHeight = 0;
+
+    rows.forEach((row) => {
+        const rowHeight = row.offsetHeight;
+
+        if (currentHeight + rowHeight > maxHeight) {
+            pagesCreated = true; // Mark that new pages are created
+            currentPage++;
+            currentContainer = createNewPage();
+            currentHeight = 0;
+
+            // Update totalPages dynamically
+            totalPages = currentPage;
+
+            // Change maxHeight to 600px after the first page
+            if (currentPage > 1) {
+                maxHeight = 600;
+            }
+        }
+        currentContainer.appendChild(row.cloneNode(true));
+        currentHeight += rowHeight;
+    });
+
+    // Remove original rows after splitting into pages
+    rows.forEach((row) => row.remove());
+
+    // Handle dynamicContent
+    const dynamicContent = document.getElementById("dynamicContent");
+
+    if (!pagesCreated && dynamicContent) {
+        // Display dynamicContent immediately if no new pages are created
+        dynamicContent.style.display = "block";
+      
+    } else if (dynamicContent) {
+        // Append dynamicContent as the final page if new pages were created
+        currentPage++;
+        const totalPages = currentPage;
+
+        dynamicContent.style.display = "block"; // Make it visible
+
+        // Update its footer
+        const dynamicFooter = dynamicContent.querySelector(".footer-content .center");
+        if (dynamicFooter) {
+            dynamicFooter.textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+
+        container.appendChild(dynamicContent); // Append dynamicContent to the container
+
+        // Update all footers
+        const allFooters = document.querySelectorAll(".footer-content .center");
+        allFooters.forEach((footer, index) => {
+            footer.textContent = `Page ${index + 1} of ${totalPages}`;
+        });
+    }
+
+    document.getElementById("amount_ok_btn").addEventListener("click", function() {
+    if (typeof totalPages === 'undefined') {
+        console.error('totalPages is not defined');
+        return;
+    }
+
+    let grandTotal = 0; // Variable to hold the total amount from all table bodies
+
+    // Loop through all pages to calculate total amount
+    for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+        const tableBody = document.getElementById(`tableBody-${currentPage}`);
+        if (tableBody) {
+            const rows = tableBody.querySelectorAll("tr");
+
+            rows.forEach(function(row) {
+                const qtyInput = row.querySelector(".qty");
+                const rateInput = row.querySelector(".rate");
+                const amountInput = row.querySelector(".amount");
+
+                const qty = parseFloat(qtyInput.value) || 0; 
+                const rate = parseFloat(rateInput.value) || 0; 
+                const amount = qty * rate;
+
+                amountInput.value = amount.toFixed(2); 
+                grandTotal += amount;
+            });
+        }
+    }
+
+    // Update total amount
+    const totalAmountInput = document.getElementById("total_amount");
+    if (totalAmountInput) {
+        totalAmountInput.value = grandTotal.toFixed(2); 
+    }
+
+    // Get other charges
+    const installCharge = parseFloat(document.getElementById("install_charge").value) || 0;
+    const packCharge = parseFloat(document.getElementById("pack_charge").value) || 0;
+
+    // Calculate SGST and CGST
+    const totalWithCharges = grandTotal + installCharge + packCharge;
+    const sgst = totalWithCharges * 0.09; // 9% SGST
+    const cgst = totalWithCharges * 0.09; // 9% CGST
+
+    document.getElementById("sgst").value = sgst.toFixed(2);
+    document.getElementById("cgst").value = cgst.toFixed(2);
+
+    // Calculate Net Amount
+    const netAmount = totalWithCharges + sgst + cgst;
+
+    const netAmountInput = document.getElementById("net_amount");
+    if (netAmountInput) {
+        netAmountInput.value = netAmount.toFixed(2); 
+    }
+});
+
+
+});
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+document.querySelectorAll('.container-5 textarea').forEach((textarea) => {
+    textarea.style.height = 'auto'; // Reset height
+    textarea.style.height = `${textarea.scrollHeight}px`; // Adjust height to content
+});
+
+   // This code runs when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const workOrderNo = urlParams.get('work_order_no');
+
+    if (workOrderNo) {
+        // Set the value of the input field with id="work_order_no"
+        const workOrderInput = document.getElementById('work_order_no');
+        workOrderInput.value = workOrderNo;
+    } else {
+        console.log("No Work Order No found in the URL.");
+    }
+});
+
+
+
+
+
+$(document).ready(function() {
+    // Triggered when a work order is selected from the datalist
+    $('#work_order_no').on('change', function() {
+        const workOrderNo = $(this).val(); // Get the selected work order number
+
+        if (workOrderNo) {
+            // Make an AJAX call to fetch the data for the selected work order
+            $.ajax({
+                type: 'GET',
+                url: '/invoice/', // Replace with your actual endpoint
+                data: {
+                    'work_order_no': workOrderNo
+                },
+                success: function(response) {
+                    console.log(response);  // Log the response to check the structure
+                },
+
+                error: function(xhr, status, error) {
+                    console.error('Error fetching work order data:', error);
+                }
+            });
+        }
+    });
+});
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

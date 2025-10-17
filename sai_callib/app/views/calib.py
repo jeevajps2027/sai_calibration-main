@@ -2,7 +2,7 @@
 import re
 from django.shortcuts import render
 from django.http import JsonResponse
-from app.models import Customer, EngineerManagerDetails, MainCalibration, SettingPlugMaster, SettingPlugTrace, SettingRingMaster, SettingRingTrace, WorkOrder, CalibrationEquipment, CalibrationResult
+from app.models import Customer, EngineerManagerDetails, LVDTprobeMaster, MainCalibration, SettingPlugMaster, SettingPlugTrace, SettingRingMaster, SettingRingTrace, WorkOrder, CalibrationEquipment, CalibrationResult
 
 
 def calib(request):
@@ -133,6 +133,7 @@ def calib(request):
         SettingPlugMaster_value = SettingPlugMaster.objects.all()
         SettingRingMaster_value = SettingRingMaster.objects.all()
         EngineerManagerDetails_value = EngineerManagerDetails.objects.all()
+        SettingProbeMaster_value = LVDTprobeMaster.objects.all()
         # MainCalibration_value = MainCalibration.objects.all()
         # CalibrationEquipment_value = CalibrationEquipment.objects.all()
         # CalibrationResult_value = CalibrationResult.objects.all()
@@ -146,5 +147,6 @@ def calib(request):
             'SettingRingMaster_value' : SettingRingMaster_value,
             'EngineerManagerDetails_value' : EngineerManagerDetails_value,
             'new_certificate_num': new_certificate_num,
+            'SettingProbeMaster_value':SettingProbeMaster_value,
         }
     return render(request,"app/calib.html",context)

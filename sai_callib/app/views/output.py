@@ -2,7 +2,7 @@ from datetime import datetime
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
-from app.models import SettingPlugMaster, SettingPlugTrace, SettingRingMaster, SettingRingTrace,MainCalibration, CalibrationEquipment, CalibrationResult
+from app.models import LVDTprobeMaster, LVDTprobeTrace, SettingPlugMaster, SettingPlugTrace, SettingRingMaster, SettingRingTrace,MainCalibration, CalibrationEquipment, CalibrationResult
 
 
 
@@ -88,12 +88,17 @@ def output(request):
         SettingRingTrace_value = SettingRingTrace.objects.all()
         SettingPlugMaster_value = SettingPlugMaster.objects.all()
         SettingRingMaster_value = SettingRingMaster.objects.all()
+        LVDTprobeTrace_value= LVDTprobeTrace.objects.all()
+        LVDTprobeMaster_value = LVDTprobeMaster.objects.all()
+
 
         context = {
             'SettingPlugTrace_value': SettingPlugTrace_value,
             'SettingRingTrace_value': SettingRingTrace_value,
             'SettingPlugMaster_value': SettingPlugMaster_value,
             'SettingRingMaster_value': SettingRingMaster_value,
+            'LVDTprobeTrace_value':LVDTprobeTrace_value,
+            'LVDTprobeMaster_value':LVDTprobeMaster_value
         }
         return render(request, "app/output.html", context)
     

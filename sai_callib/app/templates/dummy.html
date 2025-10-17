@@ -158,40 +158,14 @@ input{
   
 }
 
-.container_9 {
+.container_9{
+    height: 100px;
     width: 1015px;
-    border: 1px solid black;
-    margin: 5px;
-    padding: 10px;
-    box-sizing: border-box;
+   border: 1px solid black;
+   margin-left: 5px;
+   margin-top: 5px;
+   
 }
-
-.container_9 label.title {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    margin-left: 0; /* Title left aligned */
-    width: 70%;
-}
-
-.radio-group {
-    display: flex;
-    gap: 8px; /* small space between boxes */
-}
-
-.radio-box {
-    display: flex;
-    align-items: center;
-    gap: 3px; /* reduced gap between radio & label */
-    border: 1px solid black;
-    padding: 6px 8px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    width: 250px; /* decreased width */
-    justify-content: flex-start;
-}
-
-
 #final_button{
     height: 50px;
     width: 150px;
@@ -242,15 +216,6 @@ th{
 #btn_div{
     margin-top: -30px; 
 }
-
-#ok_button_Ring,#ok_button_plug,#ok_button_lvdt{
-    background-color: red;
-    width: 200px;
-    margin-left: 650px;
-    height: 60px;
-    font-weight: bold;
-    font-size: 2vw;
-}
 </style>
 
 <div class="box-0" id="box0" style="overflow-x: auto;overflow-y:auto;">
@@ -261,7 +226,7 @@ th{
 
     <div style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
         <label for="search" style="width: 170px;">SEARCH CUSTOMER:</label>
-        <input list="customers" id="search-input" style="width: 400px;margin-left: 10px;"  onkeyup="fetchWorkOrders()">
+        <input list="customers" id="search-input" style="width: 400px;margin-left: 10px;" onkeyup="fetchWorkOrders()">
         <datalist id="customers">
             {% for customer in customer_value %}
             <option value="{{ customer.customer_name }}" 
@@ -278,7 +243,7 @@ th{
         <label for="certificate_num" style="width: 140px;margin-left: -10px;">CERTIFICATE NO:</label>
         {% if new_certificate_num %}
             <!-- Display the new certificate number if it exists -->
-            <input type="text" id="certificate_num" name="certificate_num" value="{{ new_certificate_num }}" ><br>
+            <input type="text" id="certificate_num" name="certificate_num" value="{{ new_certificate_num }}" readonly><br>
         {% else %}
             <!-- If no new_certificate_num, display each existing certificate number -->
             {% for details in EngineerManagerDetails_value %}
@@ -403,36 +368,31 @@ th{
         </div>
        
 
-      <div class="container_9">
-    <label class="title">
-        1. REFERENCE STANDARDS & EQUIPMENTS USED FOR CALIBRATION:
-    </label>
+        <div class="container_9">
+            <label style="margin-top: 10px; width: 60%; margin-left: -50px;">
+                <b>1.REFERENCE STANDARDS & EQUIPMENTS USED FOR CALIBRATION:</b>
+            </label><br>
 
-    <div class="radio-group">
-        <div class="radio-box" style="margin-left: 10%;">
-            <input type="radio" name="group1" value="1" id="setting_plug_trace">
-            <label for="setting_plug_trace">SETTING PLUG TRACEABILITY</label>
-        </div>
-
-        <div class="radio-box">
-            <input type="radio" name="group1" value="2" id="setting_ring_trace">
-            <label for="setting_ring_trace">SETTING RING TRACEABILITY</label>
-        </div>
-
-        <div class="radio-box">
-            <input type="radio" name="group1" value="3" id="lvdt_probe_trace">
-            <label for="lvdt_probe_trace">LVDT PROBE TRACEABILITY</label>
-        </div>
-    </div>
-</div>
-
+            <div class="radio-group">
+                <input type="radio" name="group1" value="1" id="setting_plug_trace">
+                <label style="width:200px;margin-left: -100px;" >
+                    Setting Plug Traceability
+                </label>
+        
+                <input type="radio" name="group1" value="2" id="setting_ring_trace"> 
+                <label style="width:200px;margin-left: -100px;">
+                    Setting Ring Traceability
+                </label>
+            </div>
+            
+        </div>  
    
     <label style="margin-left: 20px;margin-top: 10px; width: 225px;">
         <b>2.CALIBRATION RESULTS:</b>
     </label>
     <br>
 
- <!-- Group 2 Radio Buttons -->
+  <!-- Group 2 Radio Buttons -->
 <div class="radio-group">
     <label style="width:260px">
         <input type="radio" name="group2" value="1" id="setting_plug_master" onclick="toggleVisibility()"> Setting Plug Master
@@ -440,13 +400,9 @@ th{
     <label style="width:250px">
         <input type="radio" name="group2" value="2" id="setting_ring_master" onclick="toggleVisibility()"> Setting Ring Master
     </label>
-    <label style="width:250px">
-        <input type="radio" name="group2" value="3" id="lvdt_probe_master" onclick="toggleVisibility()"> LVDT PROBE MASTER
-    </label>
 </div>
 
 <div class="container">
-    <!-- PLUG MASTER -->
     <div class="container-template" id="plugMasterContainerTemplate" style="display: none;">
         <div class="container1">
             <table style="width: 100%; border-collapse: collapse;">
@@ -471,7 +427,6 @@ th{
         </div>
     </div>
 
-    <!-- RING MASTER -->
     <div class="container-template" id="ringMasterContainerTemplate" style="display: none;">
         <div class="container1">
             <table style="width: 100%; border-collapse: collapse;">
@@ -495,31 +450,6 @@ th{
             <button id="ok_button_Ring">OK</button>
         </div>
     </div>
-
-    <!-- LVDT PROBE MASTER -->
-    <div class="container-template" id="lvdtMasterContainerTemplate" style="display: none;">
-        <div class="container1">
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="border: 1px solid black; padding: 10px; text-align: center;width: 30%;">PARAMETER NAME</th>
-                        <th style="border: 1px solid black; padding: 10px; text-align: center;width: 30%;">CALIBRATION INPUT</th>
-                        <th style="border: 1px solid black; padding: 10px; text-align: center;">ERROR</th>
-                    </tr>
-                </thead>
-            </table>
-            {% for probe_master in SettingProbeMaster_value %}
-                <div class="form-group" style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <label for="param-{{ probe_master.id }}" style="width: 200px; margin-right: 10px;">
-                        {{ probe_master.parameter_name }}<br>{{ probe_master.ref_size }}
-                    </label>
-                    <input type="text" id="input-{{ probe_master.id }}" name="input-{{ probe_master.id }}" style="margin-left: 100px;height: 50px;">
-                    <input type="text" id="output-{{ probe_master.id }}" name="output-{{ probe_master.id }}" style="margin-left: 100px;height: 50px;" readonly>
-                </div>
-            {% endfor %}
-            <button id="ok_button_lvdt">OK</button>
-        </div>
-    </div>
 </div>
 
 
@@ -541,6 +471,103 @@ th{
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    const container = document.querySelector(".container");
+
+    // Apply styles to the container
+    container.style.height = "500px"; // Set desired max height
+    container.style.width = "95%";
+    container.style.overflowY = "auto"; // Enable vertical scroll
+    container.style.overflowX = "hidden"; // Disable horizontal scroll if not needed
+    container.style.padding = "10px";
+    container.style.border = "1px solid black"; // Optional: Add border for visibility
+    container.style.display = "block";
+    container.style.backgroundColor = "white";
+
+
+    // Loop to create six copies of each container
+    for (let i = 1; i <= 6; i++) {
+        // Clone PlugMasterContainer and RingMasterContainer
+        const plugMasterClone = document.getElementById("plugMasterContainerTemplate").cloneNode(true);
+        const ringMasterClone = document.getElementById("ringMasterContainerTemplate").cloneNode(true);
+
+        // Set unique IDs and display style for each clone
+        plugMasterClone.id = `plugMasterContainer${i}`;
+        plugMasterClone.style.display = "none";
+        
+        ringMasterClone.id = `ringMasterContainer${i}`;
+        ringMasterClone.style.display = "none";
+
+           // Create a heading element for each container
+        const headingPlugMaster = document.createElement("h6");
+        headingPlugMaster.textContent = `CHANNEL-${i}`; // Dynamic title for each channel
+        headingPlugMaster.style.display = "inline-block"; // Only background around text
+        headingPlugMaster.style.textAlign = "center"; // Center text horizontally
+        headingPlugMaster.style.backgroundColor = "red"; // Red background
+        headingPlugMaster.style.color = "white"; // White text
+        headingPlugMaster.style.padding = "5px 15px"; // Padding for surrounding the text
+        headingPlugMaster.style.borderRadius = "5px"; // Optional: rounded corners
+        headingPlugMaster.style.marginBottom = "10px"; // Optional: space below heading
+        headingPlugMaster.style.marginTop = "10px";
+        headingPlugMaster.style.fontWeight = "bold";
+
+        const headingRingMaster = document.createElement("h6");
+        headingRingMaster.textContent = `CHANNEL-${i}`; // Dynamic title for each channel
+        headingRingMaster.style.display = "inline-block";
+        headingRingMaster.style.textAlign = "center";
+        headingRingMaster.style.backgroundColor = "red";
+        headingRingMaster.style.color = "white";
+        headingRingMaster.style.padding = "5px 15px";
+        headingRingMaster.style.borderRadius = "5px";
+        headingRingMaster.style.marginBottom = "10px";
+        headingRingMaster.style.marginTop= "10px";
+        headingRingMaster.style.fontWeight = "bold";
+
+
+        // Insert the heading before the content in each cloned container
+        plugMasterClone.insertBefore(headingPlugMaster, plugMasterClone.firstChild);
+        ringMasterClone.insertBefore(headingRingMaster, ringMasterClone.firstChild);
+
+        
+     // Update button IDs and styles for PlugMaster
+     const okButtonPlug = plugMasterClone.querySelector("#ok_button_Plug");
+        okButtonPlug.id = `ok_button_Plug${i}`;
+        okButtonPlug.style.backgroundColor = "red"; // Background color
+        okButtonPlug.style.color = "white"; // Text color
+        okButtonPlug.style.padding = "10px 20px"; // Padding
+        okButtonPlug.style.border = "none"; // Remove border
+        okButtonPlug.style.cursor = "pointer"; // Pointer cursor
+        okButtonPlug.style.height = "40px"; // Set desired height
+        okButtonPlug.style.width = "100px"; // Set desired width
+        okButtonPlug.style.marginLeft = "80%"; // Set margin-left
+        okButtonPlug.style.textAlign = "center"; // Center text horizontally
+        okButtonPlug.style.display = "flex"; // Enable flexbox for centering
+        okButtonPlug.style.alignItems = "center"; // Center text vertically
+        okButtonPlug.style.justifyContent = "center"; // Center text horizontally
+
+        // Update button IDs and styles for RingMaster
+        const okButtonRing = ringMasterClone.querySelector("#ok_button_Ring");
+        okButtonRing.id = `ok_button_Ring${i}`;
+        okButtonRing.style.backgroundColor = "red";
+        okButtonRing.style.color = "white";
+        okButtonRing.style.padding = "10px 20px";
+        okButtonRing.style.border = "none";
+        okButtonRing.style.cursor = "pointer";
+        okButtonRing.style.height = "40px";
+        okButtonRing.style.width = "100px";
+        okButtonRing.style.marginLeft = "80%";
+        okButtonRing.style.textAlign = "center";
+        okButtonRing.style.display = "flex";
+        okButtonRing.style.alignItems = "center";
+        okButtonRing.style.justifyContent = "center";
+
+
+        
+        // Append the clones to the main container
+        container.appendChild(plugMasterClone);
+        container.appendChild(ringMasterClone);
+    }
+});
 
 
 function fetchWorkOrders() {
@@ -726,352 +753,169 @@ document.getElementById('refresh-btn1').addEventListener('click', function() {
 
 
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    const container = document.querySelector(".container");
-
-    // Container styling
-    Object.assign(container.style, {
-        height: "500px",
-        width: "95%",
-        overflowY: "auto",
-        overflowX: "hidden",
-        padding: "10px",
-        border: "1px solid black",
-        display: "block",
-        backgroundColor: "white",
-    });
-
-    // Create six clones for plug, ring, lvdt
-    for (let i = 1; i <= 6; i++) {
-        const plugClone = document.getElementById("plugMasterContainerTemplate").cloneNode(true);
-        const ringClone = document.getElementById("ringMasterContainerTemplate").cloneNode(true);
-        const lvdtClone = document.getElementById("lvdtMasterContainerTemplate").cloneNode(true);
-
-        plugClone.id = `plugMasterContainer${i}`;
-        ringClone.id = `ringMasterContainer${i}`;
-        lvdtClone.id = `lvdtMasterContainer${i}`;
-
-        plugClone.style.display = ringClone.style.display = lvdtClone.style.display = "none";
-
-        // Heading
-        const heading = (num) => {
-            const h6 = document.createElement("h6");
-            h6.textContent = `CHANNEL-${num}`;
-            Object.assign(h6.style, {
-                backgroundColor: "red",
-                color: "white",
-                padding: "5px 15px",
-                borderRadius: "5px",
-                fontWeight: "bold",
-                textAlign: "center",
-                marginBottom: "10px",
-                marginTop: "10px",
-            });
-            return h6;
-        };
-
-        plugClone.insertBefore(heading(i), plugClone.firstChild);
-        ringClone.insertBefore(heading(i), ringClone.firstChild);
-        lvdtClone.insertBefore(heading(i), lvdtClone.firstChild);
-
-        // Style buttons & assign unique IDs
-        const styleButton = (btn, id) => {
-            if (!btn) return;
-            btn.id = id;
-            Object.assign(btn.style, {
-                backgroundColor: "red",
-                color: "white",
-                padding: "10px 20px",
-                border: "none",
-                cursor: "pointer",
-                height: "40px",
-                width: "100px",
-                marginLeft: "80%",
-                textAlign: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            });
-        };
-
-        styleButton(plugClone.querySelector("#ok_button_Plug"), `ok_button_Plug${i}`);
-        styleButton(ringClone.querySelector("#ok_button_Ring"), `ok_button_Ring${i}`);
-        styleButton(lvdtClone.querySelector("#ok_button_lvdt"), `ok_button_lvdt${i}`);
-
-        container.appendChild(plugClone);
-        container.appendChild(ringClone);
-        container.appendChild(lvdtClone);
-    }
-});
-
-// --- Toggle container visibility based on channels ---
-document.getElementById("channels").addEventListener("input", toggleVisibility);
+// Add event listener to the channels input field
+document.getElementById('channels').addEventListener('input', toggleVisibility);
 
 function toggleVisibility() {
-    const channels = parseInt(document.getElementById("channels").value) || 0;
-    const plugChecked = document.getElementById("setting_plug_master").checked;
-    const ringChecked = document.getElementById("setting_ring_master").checked;
-    const lvdtChecked = document.getElementById("lvdt_probe_master").checked;
+    const channels = parseInt(document.getElementById('channels').value); // Get the number of channels
+    const plugMasterChecked = document.getElementById('setting_plug_master').checked;
+    const ringMasterChecked = document.getElementById('setting_ring_master').checked;
 
+    // Loop through each set of plugMaster and ringMaster containers
     for (let i = 1; i <= 6; i++) {
-        const plug = document.getElementById(`plugMasterContainer${i}`);
-        const ring = document.getElementById(`ringMasterContainer${i}`);
-        const lvdt = document.getElementById(`lvdtMasterContainer${i}`);
-        if (!plug || !ring || !lvdt) continue;
+        const plugMasterContainer = document.getElementById(`plugMasterContainer${i}`);
+        const ringMasterContainer = document.getElementById(`ringMasterContainer${i}`);
 
-        if (i > channels) {
-            plug.style.display = ring.style.display = lvdt.style.display = "none";
-            continue;
+        // Show containers based on the number of channels
+        if (i <= channels) {
+            // Check if the 'plug master' radio button is selected
+            if (plugMasterChecked) {
+                plugMasterContainer.style.display = 'block'; // Show plug master container
+                ringMasterContainer.style.display = 'none';  // Hide ring master container
+
+                // Clear ring master inputs and outputs
+                clearContainerValues(ringMasterContainer);
+
+                console.log(`Plug Master Container ID: ${plugMasterContainer.id}`);
+                calculateValues('plug', i); // Pass 'plug' and index
+            } 
+            // Check if the 'ring master' radio button is selected
+            else if (ringMasterChecked) {
+                ringMasterContainer.style.display = 'block'; // Show ring master container
+                plugMasterContainer.style.display = 'none';  // Hide plug master container
+
+                  // Clear plug master inputs and outputs
+                  clearContainerValues(plugMasterContainer);
+
+                console.log(`Ring Master Container ID: ${ringMasterContainer.id}`);
+                calculateValues('ring', i); // Pass 'ring' and index
+            } 
+            // If neither is checked, hide both containers
+            else {
+                plugMasterContainer.style.display = 'none';
+                ringMasterContainer.style.display = 'none';
+            }
+        } else {
+            // Hide containers if index is greater than the number of channels selected
+            plugMasterContainer.style.display = 'none';
+            ringMasterContainer.style.display = 'none';
         }
-
-        plug.style.display = plugChecked ? "block" : "none";
-        ring.style.display = ringChecked ? "block" : "none";
-        lvdt.style.display = lvdtChecked ? "block" : "none";
     }
 }
 
-// --- Clear all input fields in a container ---
+// Function to clear values in a container's input and output fields
 function clearContainerValues(container) {
-    if (!container) return;
-    const fields = container.querySelectorAll('input[type="text"]');
-    fields.forEach((f) => (f.value = ""));
+    const inputFields = container.querySelectorAll('input[type="text"]');
+    inputFields.forEach(field => field.value = ""); // Clear each input and output field
 }
 
-// --- Event Delegation for OK Buttons ---
-document.querySelector(".container").addEventListener("click", function (event) {
-    if (event.target.id.startsWith("ok_button_Plug")) {
-        const index = parseInt(event.target.id.replace("ok_button_Plug", ""), 10);
-        calculateValues("plug", index);
-    } else if (event.target.id.startsWith("ok_button_Ring")) {
-        const index = parseInt(event.target.id.replace("ok_button_Ring", ""), 10);
-        calculateValues("ring", index);
-    } else if (event.target.id.startsWith("ok_button_lvdt")) {
-        const index = parseInt(event.target.id.replace("ok_button_lvdt", ""), 10);
-        calculateValues("lvdt", index);
+
+
+// Listen for the click event on the container where the buttons reside
+document.querySelector('.container').addEventListener('click', function(event) {
+    // Check if the clicked element is an 'OK' button for Ring Master
+    if (event.target && event.target.id.startsWith('ok_button_Plug')) {
+        // Extract the index from the button's ID (assuming it's in a pattern like 'ok_button_Plug1', 'ok_button_Plug2', etc.)
+        const index = parseInt(event.target.id.replace('ok_button_Plug', ''), 10);
+        
+        console.log("the button is clicked for index", index);
+        calculateValues('plug', index); // Pass the index to the function
     }
 });
 
-// --- Perform Calculation for Specific Container ---
-let calculatedData = [];
-
-function calculateValues(type, index) {
-    const containerId = `${type}MasterContainer${index}`;
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.warn("Container not found:", containerId);
-        return;
+// Listen for the click event on the container where the buttons reside
+document.querySelector('.container').addEventListener('click', function(event) {
+    // Check if the clicked element is an 'OK' button for Ring Master
+    if (event.target && event.target.id.startsWith('ok_button_Ring')) {
+        // Extract the index from the button's ID (assuming it's in a pattern like 'ok_button_Ring1', 'ok_button_Ring2', etc.)
+        const index = parseInt(event.target.id.replace('ok_button_Ring', ''), 10);
+        
+        console.log("the button is clicked for index", index);
+        calculateValues('ring', index); // Pass the index to the function
     }
+});
 
-    const formGroups = container.querySelectorAll(".form-group");
+
+let calculatedData = []; // To store calculated data after button click
+
+// Function to calculate values and store them only after button click
+function calculateValues(type, index) {
+    // Clear any previous data for the other master type
+    clearOldMasterData(type);
+
+    const containerId = `${type}MasterContainer${index}`;
+    const formGroups = document.querySelectorAll(`#${containerId} .form-group`);
+
     let inputValues = [];
     let outputValues = [];
-    let hasValidInput = false;
+    let hasValidInput = false; // Flag to check if any input is provided
 
     formGroups.forEach((group) => {
-        const label = group.querySelector("label");
-        const lines = label.innerText.trim().split("\n");
+        const label = group.querySelector('label');
+        const textContent = label.innerText;
 
-        const refSize = parseFloat(lines[1]) || 0;
-        let result = 0;
+        const lines = textContent.split('\n');
+        const refSize = parseFloat(lines[1].split(' ')[0]); // Get the first number from the second line
+        const nominal = lines[2]; // Get the nominal line
 
-        if (type === "plug" || type === "ring") {
-            const nominal = lines[2];
-            const regex = /^SET\s*([+-]?\d*\.?\d+)$/;
-            const match = nominal.match(regex);
-            const value = match ? parseFloat(match[1]) : 0;
-            result = refSize + value;
-        } else if (type === "lvdt") {
-            result = refSize;
+        const regex = /^SET\s*([+-]?\d*\.?\d+)$/;
+        const match = nominal.match(regex);
+
+        let value;
+        if (match) {
+            value = parseFloat(match[1]);
+        } else {
+            console.warn("Nominal format is incorrect:", nominal);
+            value = 0;
         }
 
+        const result = refSize + value;
         const formattedResult = result.toFixed(4);
+
         const inputField = group.querySelector('input[type="text"]:not([readonly])');
         const outputField = group.querySelector('input[type="text"][readonly]');
+
         const userInput = parseFloat(inputField.value) || 0;
+        
+        // Check if userInput is not zero, indicating a valid entry
+        if (userInput !== 0) {
+            hasValidInput = true;
+        }
 
-        if (userInput !== 0) hasValidInput = true;
-
-        const outputValue = hasValidInput ? formattedResult - userInput : null;
+        // Calculate outputValue only if there is a valid input; otherwise, set it to null
+        let outputValue = hasValidInput ? formattedResult - userInput : null;
 
         inputValues.push(userInput.toFixed(4));
+        // Push the formatted outputValue if it’s a number, else push an empty string
         outputValues.push(outputValue !== null ? outputValue.toFixed(4) : "");
+
+        // Set the output field value to either the formatted result or an empty string
         outputField.value = outputValue !== null ? outputValue.toFixed(4) : "";
     });
 
+    // Only store data if it was triggered by a button click with valid input
     if (hasValidInput) {
-        calculatedData.push({ containerId, inputValues, outputValues });
-        console.log(`✅ ${containerId}: Inputs = [${inputValues}], Outputs = [${outputValues}]`);
+        calculatedData.push({
+            containerId,
+            inputValues,
+            outputValues
+        });
+
+        console.log(`Container ID: ${containerId}, Input values: {${inputValues.join(', ')}}, Output values: {${outputValues.join(', ')}}`);
     } else {
-        console.log(`⚠️ No valid input in ${containerId}`);
+        console.log("No valid input provided; output not displayed.");
     }
 }
 
+// Helper function to clear data related to the unselected master type
+function clearOldMasterData(currentType) {
+    const oppositeType = currentType === 'plug' ? 'ring' : 'plug';
 
+    // Filter out any entries in calculatedData that belong to the opposite type
+    calculatedData = calculatedData.filter(data => !data.containerId.startsWith(oppositeType));
 
-// // Add event listener to the channels input field
-// document.getElementById('channels').addEventListener('input', toggleVisibility);
-
-// function toggleVisibility() {
-//     const channels = parseInt(document.getElementById('channels').value); // Get the number of channels
-//     const plugMasterChecked = document.getElementById('setting_plug_master').checked;
-//     const ringMasterChecked = document.getElementById('setting_ring_master').checked;
-
-//     // Loop through each set of plugMaster and ringMaster containers
-//     for (let i = 1; i <= 6; i++) {
-//         const plugMasterContainer = document.getElementById(`plugMasterContainer${i}`);
-//         const ringMasterContainer = document.getElementById(`ringMasterContainer${i}`);
-
-//         // Show containers based on the number of channels
-//         if (i <= channels) {
-//             // Check if the 'plug master' radio button is selected
-//             if (plugMasterChecked) {
-//                 plugMasterContainer.style.display = 'block'; // Show plug master container
-//                 ringMasterContainer.style.display = 'none';  // Hide ring master container
-
-//                 // Clear ring master inputs and outputs
-//                 clearContainerValues(ringMasterContainer);
-
-//                 console.log(`Plug Master Container ID: ${plugMasterContainer.id}`);
-//                 calculateValues('plug', i); // Pass 'plug' and index
-//             } 
-//             // Check if the 'ring master' radio button is selected
-//             else if (ringMasterChecked) {
-//                 ringMasterContainer.style.display = 'block'; // Show ring master container
-//                 plugMasterContainer.style.display = 'none';  // Hide plug master container
-
-//                   // Clear plug master inputs and outputs
-//                   clearContainerValues(plugMasterContainer);
-
-//                 console.log(`Ring Master Container ID: ${ringMasterContainer.id}`);
-//                 calculateValues('ring', i); // Pass 'ring' and index
-//             } 
-//             // If neither is checked, hide both containers
-//             else {
-//                 plugMasterContainer.style.display = 'none';
-//                 ringMasterContainer.style.display = 'none';
-//             }
-//         } else {
-//             // Hide containers if index is greater than the number of channels selected
-//             plugMasterContainer.style.display = 'none';
-//             ringMasterContainer.style.display = 'none';
-//         }
-//     }
-// }
-
-// // Function to clear values in a container's input and output fields
-// function clearContainerValues(container) {
-//     const inputFields = container.querySelectorAll('input[type="text"]');
-//     inputFields.forEach(field => field.value = ""); // Clear each input and output field
-// }
-
-
-
-// // Listen for the click event on the container where the buttons reside
-// document.querySelector('.container').addEventListener('click', function(event) {
-//     // Check if the clicked element is an 'OK' button for Ring Master
-//     if (event.target && event.target.id.startsWith('ok_button_Plug')) {
-//         // Extract the index from the button's ID (assuming it's in a pattern like 'ok_button_Plug1', 'ok_button_Plug2', etc.)
-//         const index = parseInt(event.target.id.replace('ok_button_Plug', ''), 10);
-        
-//         console.log("the button is clicked for index", index);
-//         calculateValues('plug', index); // Pass the index to the function
-//     }
-// });
-
-// // Listen for the click event on the container where the buttons reside
-// document.querySelector('.container').addEventListener('click', function(event) {
-//     // Check if the clicked element is an 'OK' button for Ring Master
-//     if (event.target && event.target.id.startsWith('ok_button_Ring')) {
-//         // Extract the index from the button's ID (assuming it's in a pattern like 'ok_button_Ring1', 'ok_button_Ring2', etc.)
-//         const index = parseInt(event.target.id.replace('ok_button_Ring', ''), 10);
-        
-//         console.log("the button is clicked for index", index);
-//         calculateValues('ring', index); // Pass the index to the function
-//     }
-// });
-
-
-// let calculatedData = []; // To store calculated data after button click
-
-// // Function to calculate values and store them only after button click
-// function calculateValues(type, index) {
-//     // Clear any previous data for the other master type
-//     clearOldMasterData(type);
-
-//     const containerId = `${type}MasterContainer${index}`;
-//     const formGroups = document.querySelectorAll(`#${containerId} .form-group`);
-
-//     let inputValues = [];
-//     let outputValues = [];
-//     let hasValidInput = false; // Flag to check if any input is provided
-
-//     formGroups.forEach((group) => {
-//         const label = group.querySelector('label');
-//         const textContent = label.innerText;
-
-//         const lines = textContent.split('\n');
-//         const refSize = parseFloat(lines[1].split(' ')[0]); // Get the first number from the second line
-//         const nominal = lines[2]; // Get the nominal line
-
-//         const regex = /^SET\s*([+-]?\d*\.?\d+)$/;
-//         const match = nominal.match(regex);
-
-//         let value;
-//         if (match) {
-//             value = parseFloat(match[1]);
-//         } else {
-//             console.warn("Nominal format is incorrect:", nominal);
-//             value = 0;
-//         }
-
-//         const result = refSize + value;
-//         const formattedResult = result.toFixed(4);
-
-//         const inputField = group.querySelector('input[type="text"]:not([readonly])');
-//         const outputField = group.querySelector('input[type="text"][readonly]');
-
-//         const userInput = parseFloat(inputField.value) || 0;
-        
-//         // Check if userInput is not zero, indicating a valid entry
-//         if (userInput !== 0) {
-//             hasValidInput = true;
-//         }
-
-//         // Calculate outputValue only if there is a valid input; otherwise, set it to null
-//         let outputValue = hasValidInput ? formattedResult - userInput : null;
-
-//         inputValues.push(userInput.toFixed(4));
-//         // Push the formatted outputValue if it’s a number, else push an empty string
-//         outputValues.push(outputValue !== null ? outputValue.toFixed(4) : "");
-
-//         // Set the output field value to either the formatted result or an empty string
-//         outputField.value = outputValue !== null ? outputValue.toFixed(4) : "";
-//     });
-
-//     // Only store data if it was triggered by a button click with valid input
-//     if (hasValidInput) {
-//         calculatedData.push({
-//             containerId,
-//             inputValues,
-//             outputValues
-//         });
-
-//         console.log(`Container ID: ${containerId}, Input values: {${inputValues.join(', ')}}, Output values: {${outputValues.join(', ')}}`);
-//     } else {
-//         console.log("No valid input provided; output not displayed.");
-//     }
-// }
-
-// // Helper function to clear data related to the unselected master type
-// function clearOldMasterData(currentType) {
-//     const oppositeType = currentType === 'plug' ? 'ring' : 'plug';
-
-//     // Filter out any entries in calculatedData that belong to the opposite type
-//     calculatedData = calculatedData.filter(data => !data.containerId.startsWith(oppositeType));
-
-//     console.log(`Cleared data for ${oppositeType} master. Current calculatedData:`, calculatedData);
-// }
+    console.log(`Cleared data for ${oppositeType} master. Current calculatedData:`, calculatedData);
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -95,13 +95,37 @@ body {
         }
         #line6 {
             position: absolute;
-            top: 26.8cm; /* Position the line 5.2 cm from the top */
+            top: 26cm; /* Position the line 5.2 cm from the top */
             left: 50%; /* Position the line in the center */
             transform: translateX(-50%); /* Center the line */
             width: 100%; /* Line width */
             height: 1px; /* Line thickness */
             background-color: #000; /* Line color */
         }
+         #line7 {
+            position: absolute;
+            top: 27cm; /* Position the line 5.2 cm from the top */
+            left: 50%; /* Position the line in the center */
+            transform: translateX(-50%); /* Center the line */
+            width: 100%; /* Line width */
+            height: 1px; /* Line thickness */
+            background-color: #000; /* Line color */
+        }
+
+        .status-line {
+  text-align: center;
+margin-top: -35px;
+}
+.status-line label {
+  font-weight: bold;
+  margin: 0 15px;
+  font-size: 1.3vw;
+}
+.status-line input[type="checkbox"] {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
         
         #sai_image{
             height: 120px;
@@ -182,6 +206,10 @@ label::after {
     right: 0; /* Align the colon to the right edge of the label */
   }
 
+  /* Disable colon ONLY inside .status-line */
+.status-line label::after {
+  content: none !important;
+}
 
 /* Remove outline from input fields */
   input[type="text"] {
@@ -350,8 +378,17 @@ th, td {
         <div class="line" id="line1"></div> 
         <div class="vertical-line"></div>
         <div class="container-1">
-            <div class="container1_subheader1">Calibration Certificate Of <br> Electronic Air Gauge Unit <br>(DRO Type)</div> 
-             <!-- <div class="container1_subheader1">Calibration Certificate Of <br>LVDT Display Unit</div> -->
+            <!-- <div class="container1_subheader1">Calibration Certificate Of <br> Electronic Air Gauge Unit <br>(DRO Type)</div> 
+             <div class="container1_subheader1">Calibration Certificate Of <br>LVDT Display Unit</div> -->
+
+             <div class="container1_subheader1 dro_header">
+  Calibration Certificate Of <br> Electronic Air Gauge Unit <br>(DRO Type)
+</div>
+
+<div class="container1_subheader1 lvdt_header">
+  Calibration Certificate Of <br> LVDT Display Unit
+</div>
+
         </div>
 
         <div class="container-2">
@@ -453,6 +490,20 @@ th, td {
                     </tr>
                     {% endfor %}
                 </tbody>
+
+
+                <tbody id="tableBody-3" style="display: none;" >
+                    {% for data in LVDTprobeTrace_value %}
+                    <tr data-id="{{ data.id }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td><input type="text" value="{{ data.master_name }}" style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                        <td><input type="text" value="{{ data.id_no }}" style="width: 100%; box-sizing: border-box; margin-left: 0px;text-align: center;"></td>
+                        <td><input type="text" value="{{ data.calibration_report_no }}" style="width: 100%; box-sizing: border-box; margin-left: 0px;text-align: center;"></td>
+                        <td><input type="text" value="{{ data.valid_upto }}" style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                        <td><input type="text" value="{{ data.traceability }}" style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         
@@ -461,7 +512,7 @@ th, td {
             <header style="text-align: center;font-weight: bold; margin-top: 10px;">CALIBRATION RESULT-1</header>
             <div class="subheader" style="font-size: 12px; font-weight: 500;margin-top: 0px;">(All Values are in mm)</div>
 
-            <table border="1" cellpadding="4" cellspacing="0" style="margin-top: 0px; width: 200mm;text-align: center;">
+            <table border="1" cellpadding="4" cellspacing="0"  class="ring_plug_table" style="margin-top: 0px; width: 200mm;text-align: center;">
                 <thead>
                     <tr>
                         <th style="width: 5%;">Sr.No</th>
@@ -498,13 +549,54 @@ th, td {
                         {% endfor %}
                     </tbody>
             </table>
+
+            <table border="1" cellpadding="4"  cellspacing="0" class="probe_table"  style="margin-top: 0px; width: 200mm;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Sr.No</th>
+                        <th style="width:30%;">Parameter</th>
+                        <th style="width: 15%;">Ref Size</th>
+                        
+                        <th style="width: 20%;">Observation Size</th>
+                        <th style="width:15%;">Error</th> 
+                    </tr>
+                </thead>
+                    <tbody id="tableBody-5-1" style="display: none;">
+                        {% for data in LVDTprobeMaster_value%}
+                        <tr data-id="{{ data.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td><input type="text" value="{{ data.parameter_name }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            <td><input type="text" value="{{ data.ref_size }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
             
         </div> 
 
 
         <div class="line" id="line6"></div> 
-        <div class="container-8" id="footer_endCertificate">
-            <header style="text-align: center;font-size: small;">..... END OF CERTIFICATE .....</header>
+       
+
+          
+ <div class="container-8" id="footer_endCertificate">
+
+    <div class="status-line">
+  <label>STATUS:</label>
+  <label style="color: green;">
+    <input type="checkbox" style="accent-color: green;"> OK
+  </label>
+  <label style="color: red;">
+    <input type="checkbox" style="accent-color: red;"> NOT OK
+  </label>
+</div>
+
+
+<div class="line" id="line7"></div>
+            <header style="text-align: center;font-size: small; margin-top: 18px;">..... END OF CERTIFICATE .....</header>
             <div class="container8_sub1">
                 <input type="text" class="calibration_engineer_op" style="width: 150px; margin-left: 25px;">
                 <p style="text-align: center; margin-top: 5px;">Calibration Engineer</p>
@@ -514,7 +606,7 @@ th, td {
                 <p style="text-align: center; margin-top: 5px;">Quality Manager</p>
             </div>
         </div>
-        <p style="margin-top: -38px;margin-left: 49%;">1</p>
+        <p style="margin-top: -5px;margin-left: 49%;">1</p>
             <footer style="border-top: 5px solid #339b8a; height: 50px; width: 199mm;">
                 <div class="scale-footer" style="margin-top: -23px;"></div>
                 <!-- The footer content will be generated dynamically -->
@@ -530,7 +622,7 @@ th, td {
             <header style="text-align: center;font-weight: bold; margin-top: 0px;">CALIBRATION RESULT-2</header>
             <div class="subheader" style="font-size: 12px; font-weight: 500;margin-top: 0px;">(All Values are in mm)</div>
 
-            <table border="1" cellpadding="4" cellspacing="0" style="margin-top: 0px; width: 200mm;text-align: center;">
+            <table border="1" cellpadding="4" cellspacing="0"   class="ring_plug_table" style="margin-top: 0px; width: 200mm;text-align: center;">
                 <thead>
                     <tr>
                         <th style="width: 5%;">Sr.No</th>
@@ -567,6 +659,30 @@ th, td {
                         {% endfor %}
                     </tbody>
             </table> 
+            <table border="1" cellpadding="4" cellspacing="0" class="probe_table"  style="margin-top: 0px; width: 200mm;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Sr.No</th>
+                        <th style="width:30%;">Parameter</th>
+                        <th style="width: 15%;">Ref Size</th>
+                        
+                        <th style="width: 20%;">Observation Size</th>
+                        <th style="width:15%;">Error</th> 
+                    </tr>
+                </thead>
+                    <tbody id="tableBody-5-2" style="display: none;">
+                        {% for data in LVDTprobeMaster_value%}
+                        <tr data-id="{{ data.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td><input type="text" value="{{ data.parameter_name }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            <td><input type="text" value="{{ data.ref_size }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
         </div> 
 
 
@@ -574,7 +690,7 @@ th, td {
             <header style="text-align: center;font-weight: bold; margin-top: 10px;">CALIBRATION RESULT-3</header>
             <div class="subheader" style="font-size: 12px; font-weight: 500;margin-top: 0px;">(All Values are in mm)</div>
 
-            <table border="1" cellpadding="4" cellspacing="0" style="margin-top: 0px; width: 200mm;text-align: center;">
+            <table border="1" cellpadding="4" cellspacing="0"   class="ring_plug_table" style="margin-top: 0px; width: 200mm;text-align: center;">
                 <thead>
                     <tr>
                         <th style="width: 5%;">Sr.No</th>
@@ -611,6 +727,30 @@ th, td {
                         {% endfor %}
                     </tbody>
             </table> 
+            <table border="1" cellpadding="4" cellspacing="0" class="probe_table" style="margin-top: 0px; width: 200mm;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Sr.No</th>
+                        <th style="width:30%;">Parameter</th>
+                        <th style="width: 15%;">Ref Size</th>
+                        
+                        <th style="width: 20%;">Observation Size</th>
+                        <th style="width:15%;">Error</th> 
+                    </tr>
+                </thead>
+                    <tbody id="tableBody-5-3" style="display: none;">
+                        {% for data in LVDTprobeMaster_value%}
+                        <tr data-id="{{ data.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td><input type="text" value="{{ data.parameter_name }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            <td><input type="text" value="{{ data.ref_size }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
         </div> 
 
 
@@ -618,7 +758,7 @@ th, td {
             <header style="text-align: center;font-weight: bold; margin-top: 10px;">CALIBRATION RESULT-4</header>
             <div class="subheader" style="font-size: 12px; font-weight: 500;margin-top: 0px;">(All Values are in mm)</div>
 
-            <table border="1" cellpadding="4" cellspacing="0" style="margin-top: 0px; width: 200mm;text-align: center;">
+            <table border="1" cellpadding="4" cellspacing="0"   class="ring_plug_table" style="margin-top: 0px; width: 200mm;text-align: center;">
                 <thead>
                     <tr>
                         <th style="width: 5%;">Sr.No</th>
@@ -655,6 +795,30 @@ th, td {
                         {% endfor %}
                     </tbody>
             </table> 
+            <table border="1" cellpadding="4" cellspacing="0" class="probe_table" style="margin-top: 0px; width: 200mm;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Sr.No</th>
+                        <th style="width:30%;">Parameter</th>
+                        <th style="width: 15%;">Ref Size</th>
+                        
+                        <th style="width: 20%;">Observation Size</th>
+                        <th style="width:15%;">Error</th> 
+                    </tr>
+                </thead>
+                    <tbody id="tableBody-5-4" style="display: none;">
+                        {% for data in LVDTprobeMaster_value%}
+                        <tr data-id="{{ data.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td><input type="text" value="{{ data.parameter_name }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            <td><input type="text" value="{{ data.ref_size }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
         </div> 
 
 
@@ -662,7 +826,7 @@ th, td {
             <header style="text-align: center;font-weight: bold; margin-top: 10px;">CALIBRATION RESULT-5</header>
             <div class="subheader" style="font-size: 12px; font-weight: 500;margin-top: 0px;">(All Values are in mm)</div>
 
-            <table border="1" cellpadding="4" cellspacing="0" style="margin-top: 0px; width: 200mm;text-align: center;">
+            <table border="1" cellpadding="4" cellspacing="0"   class="ring_plug_table" style="margin-top: 0px; width: 200mm;text-align: center;">
                 <thead>
                     <tr>
                         <th style="width: 5%;">Sr.No</th>
@@ -699,6 +863,30 @@ th, td {
                         {% endfor %}
                     </tbody>
             </table> 
+            <table border="1" cellpadding="4" cellspacing="0" class="probe_table" style="margin-top: 0px; width: 200mm;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Sr.No</th>
+                        <th style="width:30%;">Parameter</th>
+                        <th style="width: 15%;">Ref Size</th>
+                        
+                        <th style="width: 20%;">Observation Size</th>
+                        <th style="width:15%;">Error</th> 
+                    </tr>
+                </thead>
+                    <tbody id="tableBody-5-5" style="display: none;">
+                        {% for data in LVDTprobeMaster_value%}
+                        <tr data-id="{{ data.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td><input type="text" value="{{ data.parameter_name }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            <td><input type="text" value="{{ data.ref_size }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
         </div> 
 
 
@@ -706,7 +894,7 @@ th, td {
             <header style="text-align: center;font-weight: bold; margin-top: 10px;">CALIBRATION RESULT-6</header>
             <div class="subheader" style="font-size: 12px; font-weight: 500;margin-top: 0px;">(All Values are in mm)</div>
 
-            <table border="1" cellpadding="4" cellspacing="0" style="margin-top: 0px; width: 200mm;text-align: center;">
+            <table border="1" cellpadding="4" cellspacing="0"   class="ring_plug_table" style="margin-top: 0px; width: 200mm;text-align: center;">
                 <thead>
                     <tr>
                         <th style="width: 5%;">Sr.No</th>
@@ -743,12 +931,48 @@ th, td {
                         {% endfor %}
                     </tbody>
             </table> 
+            <table border="1" cellpadding="4" cellspacing="0" class="probe_table" style="margin-top: 0px; width: 200mm;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Sr.No</th>
+                        <th style="width:30%;">Parameter</th>
+                        <th style="width: 15%;">Ref Size</th>
+                        
+                        <th style="width: 20%;">Observation Size</th>
+                        <th style="width:15%;">Error</th> 
+                    </tr>
+                </thead>
+                    <tbody id="tableBody-5-6" style="display: none;">
+                        {% for data in LVDTprobeMaster_value%}
+                        <tr data-id="{{ data.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td><input type="text" value="{{ data.parameter_name }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            <td><input type="text" value="{{ data.ref_size }}"style="width: 100%; box-sizing: border-box;margin-left: 0px;text-align: center;"></td>
+                            
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
         </div> 
 
         <div class="line" id="line6"></div> 
         <div class="container-8-1" style="position: absolute; bottom: 5px; left: 0; width: 100%; text-align: center;">
+             <div class="status-line" style="border-bottom: 1px solid black;">
+  <label>STATUS:</label>
+  <label style="color: green;">
+    <input type="checkbox" style="accent-color: green;"> OK
+  </label>
+  <label style="color: red;">
+    <input type="checkbox" style="accent-color: red;"> NOT OK
+  </label>
+</div>
+
+
+<div class="line" id="line7"></div>
    
-            <header style="text-align: center;font-size: small;">..... END OF CERTIFICATE .....</header>
+            <header style="text-align: center;font-size: small;margin-top: 16px;">..... END OF CERTIFICATE .....</header>
             <div class="container8_sub1">
                 <input type="text" class="calibration_engineer_op" style="width: 150px; margin-left: 25px;">
                 <p style="text-align: center; margin-top: 5px;">Calibration Engineer</p>
@@ -833,22 +1057,36 @@ function downloadPDF() {
         work_order: document.getElementById("work_order_no_op")?.value || '',
     };
 
-    // Determine which table body is visible and collect data from it
-    let tableData = [];
-    const visibleTableBody = document.getElementById("tableBody-1").style.display !== "none" ? "tableBody-1" : "tableBody-2";
-    const rows = document.querySelectorAll(`#${visibleTableBody} tr`);
+   // Determine which table body is visible and collect data from it
+let tableData = [];
+
+// Find the visible table body among all three
+let visibleTableBodyId = null;
+["tableBody-1", "tableBody-2", "tableBody-3"].forEach(id => {
+    const element = document.getElementById(id);
+    if (element && element.style.display !== "none") {
+        visibleTableBodyId = id;
+    }
+});
+
+if (visibleTableBodyId) {
+    const rows = document.querySelectorAll(`#${visibleTableBodyId} tr`);
 
     rows.forEach(row => {
         const rowData = {
-            sr_no: row.cells[0].innerText.trim(),
-            master_name: row.cells[1].querySelector('input')?.value.trim() || '',
-            id_no: row.cells[2].querySelector('input')?.value.trim() || '',
-            calibration_no: row.cells[3].querySelector('input')?.value.trim() || '',
-            valid_upto: row.cells[4].querySelector('input')?.value.trim() || '',
-            traceability: row.cells[5].querySelector('input')?.value.trim() || ''
+            sr_no: row.cells[0]?.innerText.trim() || '',
+            master_name: row.cells[1]?.querySelector('input')?.value.trim() || '',
+            id_no: row.cells[2]?.querySelector('input')?.value.trim() || '',
+            calibration_no: row.cells[3]?.querySelector('input')?.value.trim() || '',
+            valid_upto: row.cells[4]?.querySelector('input')?.value.trim() || '',
+            traceability: row.cells[5]?.querySelector('input')?.value.trim() || ''
         };
         tableData.push(rowData);
     });
+}
+
+console.log(tableData);
+
 
     // Add table data to formData
     formData.tableData = tableData;
@@ -874,7 +1112,7 @@ function downloadPDF() {
                         ref_size: row.cells[2].querySelector('input')?.value || '',
                         nominal: row.cells[3].querySelector('input')?.value || '',
                         observation_size: row.cells[4].innerText || '',
-                        error: row.cells[5].innerText || '',
+                        error: row.cells[5].innerText || '', 
                     };
                     rowData.push(dataRow);
                 });
@@ -1093,10 +1331,18 @@ var group1SelectionId = storedFormData.group1Selection; // Replace with actual k
 if (group1SelectionId === "setting_ring_trace") {
     document.getElementById("tableBody-2").style.display = ""; // Show tableBody-2
     document.getElementById("tableBody-1").style.display = "none"; // Hide tableBody-1
+     document.getElementById("tableBody-3").style.display = "none"; // Hide tableBody-2
 } else if (group1SelectionId === "setting_plug_trace") {
     document.getElementById("tableBody-1").style.display = ""; // Show tableBody-1
     document.getElementById("tableBody-2").style.display = "none"; // Hide tableBody-2
-} else {
+      document.getElementById("tableBody-3").style.display = "none"; // Hide tableBody-2
+}
+ else if (group1SelectionId === "lvdt_probe_trace") {
+    document.getElementById("tableBody-1").style.display = "none"; // Show tableBody-1
+    document.getElementById("tableBody-2").style.display = "none"; // Hide tableBody-2
+    document.getElementById("tableBody-3").style.display = ""; // Hide tableBody-2
+}
+ else {
     // Optionally handle cases where the selection ID is unrecognized
     console.warn("Unrecognized selection ID:", group1SelectionId);
 }
@@ -1124,17 +1370,57 @@ function showElementsByPrefix(prefix) {
     }
 }
 
-// Determine which tbody elements to display
+// Determine which tbody elements and headers to display
 if (group2SelectionId === "setting_ring_master") {
-    showElementsByPrefix("tableBody-4-"); // Show all tableBody-4-* elements
-    hideElementsByPrefix("tableBody-3-"); // Hide all tableBody-3-* elements
+    // Show all ring-related rows
+    showElementsByPrefix("tableBody-4-");
+    hideElementsByPrefix("tableBody-3-");
+    hideElementsByPrefix("tableBody-5-");
+
+    // Show ring/plug tables, hide probe tables
+    document.querySelectorAll(".ring_plug_table").forEach(el => el.style.display = "table");
+    document.querySelectorAll(".probe_table").forEach(el => el.style.display = "none");
+
+    // Show DRO headers, hide LVDT headers
+    document.querySelectorAll(".dro_header").forEach(el => el.style.display = "block");
+    document.querySelectorAll(".lvdt_header").forEach(el => el.style.display = "none");
+
 } else if (group2SelectionId === "setting_plug_master") {
-    showElementsByPrefix("tableBody-3-"); // Show tableBody-3-1
-    hideElementsByPrefix("tableBody-4-"); // Hide all tableBody-4-* elements
+    // Show all plug-related rows
+    showElementsByPrefix("tableBody-3-");
+    hideElementsByPrefix("tableBody-4-");
+    hideElementsByPrefix("tableBody-5-");
+
+    // Show ring/plug tables, hide probe tables
+    document.querySelectorAll(".ring_plug_table").forEach(el => el.style.display = "table");
+    document.querySelectorAll(".probe_table").forEach(el => el.style.display = "none");
+
+    // Show DRO headers, hide LVDT headers
+    document.querySelectorAll(".dro_header").forEach(el => el.style.display = "block");
+    document.querySelectorAll(".lvdt_header").forEach(el => el.style.display = "none");
+
+} else if (group2SelectionId === "lvdt_probe_master") {
+    // Show all probe-related rows
+    showElementsByPrefix("tableBody-5-");
+    hideElementsByPrefix("tableBody-4-");
+    hideElementsByPrefix("tableBody-3-");
+
+    // Show probe tables, hide ring/plug tables
+    document.querySelectorAll(".probe_table").forEach(el => el.style.display = "table");
+    document.querySelectorAll(".ring_plug_table").forEach(el => el.style.display = "none");
+
+    // Show LVDT headers, hide DRO headers
+    document.querySelectorAll(".lvdt_header").forEach(el => el.style.display = "block");
+    document.querySelectorAll(".dro_header").forEach(el => el.style.display = "none");
+
 } else {
-    // Optionally handle unrecognized selection IDs
     console.warn("Unrecognized selection ID:", group2SelectionId);
+
+    // Hide all tables and headers by default
+    document.querySelectorAll(".ring_plug_table, .probe_table, .dro_header, .lvdt_header")
+        .forEach(el => el.style.display = "none");
 }
+
 
 // Get calculatedData from storedFormData
 var calculatedData = storedFormData.calculatedData;
@@ -1182,27 +1468,49 @@ calculatedData.forEach((data, index) => {
     const containerId = `container-7-${index + 1}`;
     const inputValues = data.inputValues;
     const outputValues = data.outputValues;
-    
-    // Select the correct tbody based on group2SelectionId
-    const tbodyId = group2SelectionId === "setting_ring_master" ? `tableBody-4-${index + 1}` : `tableBody-3-${index + 1}`;
-    const tbody = document.getElementById(tbodyId);
-    
-    if (tbody) {
-        const rows = Array.from(tbody.getElementsByTagName("tr")); // Convert to an array
-        
-        rows.forEach((row, rowIndex) => {
-            // Assign input and output values if they exist in inputValues and outputValues arrays
-            if (inputValues[rowIndex]) {
-                row.cells[4].innerText = inputValues[rowIndex]; // 5th column (Observation Size)
-            }
-            if (outputValues[rowIndex]) {
-                row.cells[5].innerText = outputValues[rowIndex]; // 6th column (Error)
-            }
-        });
+
+    let tbodyId;
+    let inputColIndex;
+    let outputColIndex;
+
+    // Determine tbody and column indices based on group2SelectionId
+    if (group2SelectionId === "setting_ring_master") {
+        tbodyId = `tableBody-4-${index + 1}`;
+        inputColIndex = 4;  // 5th column
+        outputColIndex = 5; // 6th column
+    } else if (group2SelectionId === "setting_plug_master") {
+        tbodyId = `tableBody-3-${index + 1}`;
+        inputColIndex = 4;  // 5th column
+        outputColIndex = 5; // 6th column
+    } else if (group2SelectionId === "lvdt_probe_master") {
+        tbodyId = `tableBody-5-${index + 1}`;
+        inputColIndex = 3;  // 4th column
+        outputColIndex = 4; // 5th column
     } else {
-        console.warn(`${tbodyId} does not exist for ${containerId}`);
+        console.warn("Unrecognized selection ID:", group2SelectionId);
+        return;
     }
+
+    // Get the correct tbody
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) {
+        console.warn(`${tbodyId} does not exist for ${containerId}`);
+        return;
+    }
+
+    const rows = Array.from(tbody.getElementsByTagName("tr")); // Convert to array
+
+    rows.forEach((row, rowIndex) => {
+        // Assign input and output values if available
+        if (inputValues[rowIndex] !== undefined) {
+            row.cells[inputColIndex].innerText = inputValues[rowIndex];
+        }
+        if (outputValues[rowIndex] !== undefined) {
+            row.cells[outputColIndex].innerText = outputValues[rowIndex];
+        }
+    });
 });
+
 
 }
 

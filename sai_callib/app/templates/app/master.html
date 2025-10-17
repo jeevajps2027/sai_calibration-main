@@ -5,27 +5,51 @@ Master Data
 {% block content %}
 <style>
     #box0{
-        height: 630px;
-        width: 1050px;
-        margin-left: 50px;
+        height: 100%;
+        width: 100%;
+        
         border: 2px solid black;
-        background-color:#fae5d5;
-        border-radius: 20px;
+        background-color:lightgrey;
+       
     }
     #box1{
-        height: 80px;
-        width: 900px;
-        margin-top: 10px;
-        margin-left: 50px;
+        height: 80%;
+        width:90%;
+        margin-top: 1%;
+        margin-left: 5%;
         border: 2px solid black;
-        background-color:#c9f6e0;
+        background-color:black;
         border-radius: 5px;
+         display: flex;
+    justify-content: center; /* horizontally center */
+    align-items: center;     /* vertically center */
+    gap: 20px;               /* space between labels */
     }
+
+
+ .inner-box-1, .inner-box-2,.inner-box-3{
+        padding: 10px;
+        background-color: #f0f0f0;
+        border: 2px solid #ccc;
+        text-align: center;
+        cursor: pointer;
+        font-weight: bold;
+       margin-bottom: 1%;
+        height: 90%;
+        width:25%;
+        font-weight: bold;
+        font-size: 1.5vw;
+  }
+
+
+
+
+
     #box2{
-        height: 500px;
-        width: 900px;
-        margin-top: 10px;
-        margin-left: 50px;
+        height: 100%;
+        width: 90%;
+        margin-top: 2%;
+        margin-left: 5%;
         border: 2px solid black;
         background-color: #e6d2fc;
     }
@@ -35,21 +59,10 @@ Master Data
     }
 
     body{
-        background-color: #1a7d9e;
+        background-color: lightgrey;
     }
 
-    .inner-box-1, .inner-box-2, .inner-box-3, .inner-box-4{
-        padding: 10px;
-        background-color: #f0f0f0;
-        border: 2px solid #ccc;
-        text-align: center;
-        cursor: pointer;
-        font-weight: bold;
-        margin-top: 10px;
-        margin-left: 30px;
-        height: 50px;
-        width:180px;
-  }
+   
     .item-1, .item-2, .item-3, .item-4{
     border: 1px solid #ccc;
     padding: 20px;
@@ -85,45 +98,7 @@ select {
 
    
 
-    .container {
-            display: flex;
-            align-items: center; /* Center elements vertically */
-            justify-content: center; /* Center elements horizontally */
-            margin-top: 20px; /* Adjust as needed */
-            background-color: #E6E6FA;
-            padding: 20px; /* Add padding if needed */
-        }
-
-        .label-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center label vertically within the container */
-            margin-right: 20px; /* Adjust space between label and textarea */
-        }
-
-        .ruled-textarea {
-            width: 450px;
-            height: 120px;
-            line-height: 30px; /* Adjust to match the height of each line */
-            background: repeating-linear-gradient(
-                white, 
-                white 29px, /* Adjust to match the height of each line minus the border width */
-                black 30px /* Adjust to match the line-height */
-            );
-            border: 1px solid #ccc;
-            padding: 5px;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            resize: none; /* Prevent resizing to maintain the line structure */
-            margin-left: 20px; /* Space between textarea and label */
-        }
-
-        .ruled-textarea:focus {
-            border-color: #904caf; /* Add focus style */
-            box-shadow: 0 0 5px #904caf;
-            outline: none;
-        }
+    
         
   /* Basic styling for the custom dropdown container */
   .dropdown {
@@ -179,7 +154,7 @@ select {
              margin-top: 30px;
                
          }
-#cancel-btn-2,#cancel-btn-3,#cancel-btn-4{
+#cancel-btn-2,#cancel-btn-3,#cancel-btn-4,#cancel-btn-5,#cancel-btn-6{
     background-color: orange;
     color:black;
     height: 50px;
@@ -214,22 +189,7 @@ background-color: orange;
       margin-top: 30px;
   }
 
-  /* Style for the input field */
-#search-input {
-        width: 600px;
-        padding: 8px;
-        font-size: 16px;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        outline: none;
-        margin-left: -20px;
- }
 
-/* Add custom outline when input is focused */
-#search-input:focus {
-    border-color: #904caf;
-    box-shadow: 0 0 8px #904caf;
-}
 
 
 #notification {
@@ -255,7 +215,7 @@ background-color: orange;
     .no-outline{
         border: none;
         outline: none;
-    }   
+    }    
 
     
 </style>
@@ -263,10 +223,10 @@ background-color: orange;
 
 <div class="box-0" id="box0">
     <div class="box-1" id="box1">
-        <label class="inner-box-1" id="customer_details"  onclick="enlargeItem(1),showItem('item-1')" >CUSTOMER DETAILS</label>
+        <label class="inner-box-1" id="probe_details"  onclick="enlargeItem(1),showItem('item-1')" >PROBE DETAILS</label>
         <label class="inner-box-2" id="traceability" onclick="enlargeItem(2),showItem('item-2')" >TRACEABILITY</label>
         <label class="inner-box-3" id="master" onclick="enlargeItem(3),showItem('item-3')" >MASTER DETAILS</label>
-        <label class="inner-box-4" id="engineer_details" onclick="enlargeItem(4),showItem('item-4')">ENGINEER DETAILS</label>
+        
     </div>
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -275,70 +235,93 @@ background-color: orange;
 
         <div id="notification" style="display: none;"></div>
         <div class="item item-1" id="item1">
-        
-            <form id="customer-form" onsubmit="return validateForm()">
-                <label for="search" style="margin-left: -20px; width: 200px;margin-top: -10px;">SEARCH CUSTOMER:</label>
-                <input list="customers" id="search-input" style="width: 600px;">
-                <datalist id="customers">
-                    {% for customer in customer_value %}
-                    <option value="{{ customer.customer_name }}"
-                            data-primary-contact="{{ customer.primary_contact_person }}"
-                            data-secondary-contact="{{ customer.secondary_contact_person }}"
-                            data-primary-email="{{ customer.primary_email }}"
-                            data-secondary-email="{{ customer.secondary_email }}"
-                            data-primary-phone="{{ customer.primary_phone_no }}"
-                            data-secondary-phone="{{ customer.secondary_phone_no }}"
-                            data-gst="{{ customer.gst_no }}"
-                            data-primary_department="{{ customer.primary_dept }}"
-                            data-secondary_department="{{ customer.secondary_dept }}"
-                            data-address="{{ customer.address }}">
-                    {% endfor %}
-                </datalist><br><br>
-                
 
-                <label for="customer_name" style="margin-left: 0px; margin-top: -10px;">CUSTOMER NAME:</label>
-                <input type="text" id="customer_name" name="customer_name" value="" required>
-                <label for="gst_no" style="margin-left: -10px;">GST No:</label>
-                <input type="text" id="gst_no" name="gst_no" required ><br>
+            <div style="display: flex; margin-top: -10px; margin-left: -20px; gap: 15px;">
+                   <label style="width: 250px;">
+    <input type="radio" name="group" value="1" id="lvdt_probe_trace_radio" onclick="toggleTables3()" checked>
+    LVDT PROBE TRACE
+</label>
 
-                <table id="prim_sec_table" style="margin-top: 10px;">
-                    <tr>
-                        <th></th>
-                        <th style="width: 20%;">Contact Person</th>
-                        <th style="width: 20%;">Ph.No</th>
-                        <th style="width: 20%;">Email</th>
-                        <th style="width: 20%;">Department</th>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: bold;">PRIMARY</td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="primary_contact_person"></td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="primary_phone_no" ></td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="primary_email"></td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="primary_dept"></td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: bold;">SECONDARY</td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="secondary_contact_person"></td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="secondary_phone_no"></td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="secondary_email"></td>
-                        <td><input type="text" class="no-outline" style="width: 100%;" id="secondary_dept"></td>
-                    </tr>
-                </table>
-        
+                    <label style="width: 250px;">
+                        <input type="radio" name="group" value="2" id="lvdt_probe_master_radio" onclick="toggleTables3()"> LVDT PROBE MASTER
+                    </label>
+            </div>
+
+
+           
+<div id="lvdt_probe_trace" style="display: block;">
+     <label for="tableBody-5" style="font-weight: bold; display: block; margin-left: 25%;font-size: 2vw;width: 50%;">LVDT PROBE TRACE</label>
+    <table border="1" style="margin-top: 10px; width: 100%;">
+        <thead>
+            <tr>
+                <th>SR.NO</th>
+                <th style="width: 25%;">MASTER NAME</th>
+                <th style="width: 10%;">ID.NO</th>
+                <th style="width: 22%;">CALIBRATION NUMBER</th>
+                <th style="width: 15%;">VALID UPTO</th>
+                <th style="width: 28%;">TRACEBILITY</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody-5">
+            {% for data in LVDTprobeTrace_value %}
+            <tr data-id="{{ data.id }}">
+                <td>{{ forloop.counter }}</td>
+                <td><input type="text" value="{{ data.master_name }}" class="no-outline" style="width: 100%;"></td>
+                <td><input type="text" value="{{ data.id_no }}" class="no-outline" style="width: 100%;"></td>
+                <td><input type="text" value="{{ data.calibration_report_no }}" class="no-outline" style="width: 100%;"></td>
+                <td><input type="text" value="{{ data.valid_upto }}" class="no-outline" style="width: 100%;"></td>
+                <td><input type="text" value="{{ data.traceability }}" class="no-outline" style="width: 100%;"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <button onclick="addRow('lvdt_probe_trace', 6)">ADD NEW</button>
+    <div>
+        <a href="/index/">
+            <button type="button" id="cancel-btn-5"><b>CANCEL</b></button>
+        </a>
+        <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-5')"><b>DELETE</b></button>
+        <button type="submit" id="save-btn" onclick="saveData('lvdt_probe_trace')"><b>SAVE</b></button>
+    </div>
+</div>
+
+
+<!-- Table 6 -->
+<div id="lvdt_probe_master" style="display: none;" >
+     <label for="tableBody-5" style="font-weight: bold; display: block; margin-left: 25%;font-size: 2vw;width: 50%;">LVDT PROBE MASTER</label>
+    <table border="1" style="margin-top: 10px; width: 100%;">
+        <thead>
+            <tr>
+                <th style="width: 5%;">SR.NO</th>
+                <th style="width: 20%;" id="parameter_name">PARAMETER NAME</th>
+                <th style="width: 20%;" id="ref_size"> REF SIZE ON SETTING RING GAUGE</th>
                 
+            </tr>
+        </thead>
+        <tbody id="tableBody-6">
+            {% for data in LVDTprobeMaster_value %}
+            <tr data-id="{{ data.id }}">
+                <td>{{ forloop.counter }}</td>
+                <td><input type="text" value="{{ data.parameter_name }}" class="no-outline" style="width: 100%;"></td>
+                <td><input type="text" value="{{ data.ref_size }}" class="no-outline" style="width: 100%;"></td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <button onclick="addRow('lvdt_probe_master', 3)">ADD NEW</button>
+    <div>
+        <a href="/index/">
+            <button type="button" id="cancel-btn-6"><b>CANCEL</b></button>
+        </a>
+        <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-6')"><b>DELETE</b></button>
+        <button type="submit" id="save-btn" onclick="saveData('lvdt_probe_master')"><b>SAVE</b></button>
+    </div>
+</div>
+
         
-                <div class="container">
-                    <div class="label-container">
-                        <label for="address" style="text-align: right;">ADDRESS:</label>
-                    </div>
-                    <textarea id="address" name="address" class="ruled-textarea" required></textarea>
-                </div>
-            <a href="/index/">
-                <button type="button" id="cancel-btn"><b>Cancel</b></button>
-            </a>
-            <button type="button" id="clear-btn" onclick="clearValues()"><b>Clear values</b></button>
-            <button type="submit" id="save-btn" onclick="saveData('customer')"><b>Save</b></button>
-        </form>
         </div>
 
 
@@ -348,23 +331,23 @@ background-color: orange;
 <div class="item item-2" id="item2">
     <div style="display: flex; margin-top: -10px; margin-left: -20px; gap: 15px;">
         <label style="width: 250px;">
-            <input type="radio" name="group" value="1" id="setting_plug_trace_radio" onclick="toggleTables()" checked> Setting Plug Trace
+            <input type="radio" name="group" value="1" id="setting_plug_trace_radio" onclick="toggleTables()"> SETTING PLUG TRACEBILITY
         </label>
         <label style="width: 250px;">
-            <input type="radio" name="group" value="2" id="setting_ring_trace_radio" onclick="toggleTables()"> Setting Ring Trace
+            <input type="radio" name="group" value="2" id="setting_ring_trace_radio" onclick="toggleTables()"> SETTING RING TRACEBILITY
         </label>
     </div>
 
-    <div id="setting_plug_trace" style="display: none;">
+    <div id="setting_plug_trace" style="display: block;">
         <table border="1" style="margin-top: 10px;">
             <thead>
                 <tr>
-                    <th>Sr.No</th>
-                    <th style="width: 25%;">Master Name</th>
-                    <th style="width: 10%;">Id.No</th>
-                    <th style="width: 22%;">Calibration No</th>
-                    <th style="width: 15%;">Valid Upto</th>
-                    <th style="width: 28%;">Traceability</th>
+                    <th>SR.NO</th>
+                    <th style="width: 25%;">MASTER NAME</th>
+                    <th style="width: 10%;">ID.NO</th>
+                    <th style="width: 22%;">CALIBRATION NUMBER</th>
+                    <th style="width: 15%;">VALID UPTO</th>
+                    <th style="width: 28%;">TRACEBILITY</th>
                 </tr>
             </thead>
             <tbody id="tableBody-1">
@@ -381,13 +364,13 @@ background-color: orange;
             </tbody>
         </table>
         <br>
-        <button onclick="addRow('setting_plug_trace', 6)">Add New</button>
+        <button onclick="addRow('setting_plug_trace', 6)">ADD NEW</button>
         <div>
             <a href="/index/">
-                <button type="button" id="cancel-btn-2"><b>Cancel</b></button>
+                <button type="button" id="cancel-btn-2"><b>CANCEL</b></button>
             </a>
-            <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-1')"><b>Delete</b></button>
-            <button type="submit" id="save-btn" onclick="saveData('setting_plug_trace')"><b>Save</b></button>
+            <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-1')"><b>DELETE</b></button>
+            <button type="submit" id="save-btn" onclick="saveData('setting_plug_trace')"><b>SAVE</b></button>
         </div>
     </div>
 
@@ -395,12 +378,12 @@ background-color: orange;
         <table border="1" style="margin-top: 10px;">
             <thead>
                 <tr>
-                    <th>Sr.No</th>
-                    <th style="width: 25%;">Master Name</th>
-                    <th style="width: 10%;">Id.No</th>
-                    <th style="width: 22%;">Calibration No</th>
-                    <th style="width: 15%;">Valid Upto</th>
-                    <th style="width: 28%;">Traceability</th>
+                    <th>SR.NO</th>
+                    <th style="width: 25%;">MASTER NAME</th>
+                    <th style="width: 10%;">ID.NO</th>
+                    <th style="width: 22%;">CALIBRATION NUMBER</th>
+                    <th style="width: 15%;">VALID UPTO</th>
+                    <th style="width: 28%;">TRACEBILITY</th>
                 </tr>
             </thead>
             <tbody id="tableBody-2">
@@ -417,13 +400,13 @@ background-color: orange;
             </tbody>
         </table>
         <br>
-        <button onclick="addRow('setting_ring_trace', 6)">Add New</button>
+        <button onclick="addRow('setting_ring_trace', 6)">ADD NEW</button>
         <div>
             <a href="/index/">
-                <button type="button" id="cancel-btn-2"><b>Cancel</b></button>
+                <button type="button" id="cancel-btn-2"><b>CANCEL</b></button>
             </a>
-            <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-2')"><b>Delete</b></button>
-            <button type="submit" id="save-btn" onclick="saveData('setting_ring_trace')"><b>Save</b></button>
+            <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-2')"><b>DELETE</b></button>
+            <button type="submit" id="save-btn" onclick="saveData('setting_ring_trace')"><b>SAVE</b></button>
         </div>
     </div>
 </div>
@@ -434,20 +417,20 @@ background-color: orange;
         <div class="item item-3" id="item3">
             <div style="display: flex; margin-top: -10px; margin-left: -20px; gap: 15px;">
                 <label style="width: 250px;">
-                    <input type="radio" name="group" value="1" id="setting_plug_master_radio" onclick="toggleTables2()" > Setting Plug Master
+                    <input type="radio" name="group" value="1" id="setting_plug_master_radio" onclick="toggleTables2()" > SETTING PLUG MASTER
                   </label>
                   <label style="width: 250px;">
-                    <input type="radio" name="group" value="2" id="setting_ring_master_radio" onclick="toggleTables2()"> Setting Ring Master 
+                    <input type="radio" name="group" value="2" id="setting_ring_master_radio" onclick="toggleTables2()"> SETTING RING MASTER 
                   </label>
                 </div>
             <div id="setting_plug_master" style="display: none;">
             <table border="1" style="margin-top: 10px;">
                 <thead>
                     <tr>
-                        <th style="width: 5%;">Sr.No</th>
-                        <th style="width: 20%;" id="parameter_name">Parameter Name</th>
-                        <th style="width: 20%;" id="ref_size">Ref Size on Setting Ring Gauge</th>
-                        <th style="width: 20%;" id="nominal">Nominal</th>
+                        <th style="width: 5%;">SR.NO</th>
+                        <th style="width: 20%;" id="parameter_name">PARAMETER NAME</th>
+                        <th style="width: 20%;" id="ref_size"> REF SIZE ON SETTING RING GAUGE</th>
+                        <th style="width: 20%;" id="nominal">NOMINAL</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody-3">
@@ -461,13 +444,13 @@ background-color: orange;
                     {% endfor %}
                 </tbody>
             </table><br>
-            <button onclick="addRow('setting_plug_master', 4)">Add New</button>
+            <button onclick="addRow('setting_plug_master', 4)">ADD NEW</button>
             <div>
                 <a href="/index/">
-                    <button type="button" id="cancel-btn-3"><b>Cancel</b></button>
+                    <button type="button" id="cancel-btn-3"><b>CANCEL</b></button>
                 </a>
-                <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-3')"><b>Delete</b></button>
-                <button type="submit" id="save-btn" onclick="saveData('setting_plug_master')"><b>Save</b></button>
+                <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-3')"><b>DELETE</b></button>
+                <button type="submit" id="save-btn" onclick="saveData('setting_plug_master')"><b>SAVE</b></button>
             </div>
             </div>
 
@@ -476,10 +459,10 @@ background-color: orange;
                 <table border="1" style="margin-top: 10px;">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr.No</th>
-                            <th style="width: 20%;" id="parameter_name">Parameter Name</th>
-                            <th style="width: 20%;" id="ref_size">Ref Size on Setting Ring Gauge</th>
-                            <th style="width: 20%;" id="nominal">Nominal</th>
+                            <th style="width: 5%;">SR.NO</th>
+                            <th style="width: 20%;" id="parameter_name">PARAMETER NAME</th>
+                            <th style="width: 20%;" id="ref_size"> REF SIZE ON SETTING RING GAUGE</th>
+                            <th style="width: 20%;" id="nominal">NOMINAL</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody-4">
@@ -493,98 +476,26 @@ background-color: orange;
                         {% endfor %}
                     </tbody>
                 </table><br>
-                <button onclick="addRow('setting_ring_master', 4)">Add New</button>
+                <button onclick="addRow('setting_ring_master', 4)">ADD NEW</button>
                 <div>
                     <a href="/index/">
-                        <button type="button" id="cancel-btn-3"><b>Cancel</b></button>
+                        <button type="button" id="cancel-btn-3"><b>CANCEL</b></button>
                     </a>
-                    <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-4')"><b>Delete</b></button>
-                    <button type="submit" id="save-btn" onclick="saveData('setting_ring_master')"><b>Save</b></button>
+                    <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-4')"><b>DELETE</b></button>
+                    <button type="submit" id="save-btn" onclick="saveData('setting_ring_master')"><b>SAVE</b></button>
                 </div>
                 </div>
         </div>
 
 <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
 
-        <div class="item item-4" id="item4">
-            <div id="engineer_manager_details" >
-            <table border="1" style="margin-top: 10px;">
-                <thead>
-                    <tr>
-                        <th style="width: 5%;">Sr.No</th>
-                        <th style="width: 20%;" id="calib_engineer">Calibration Engineer</th>
-                        <th style="width: 20%;" id="quality_manager">Quality Manager</th>
-                        <th style="width: 20%;" id="certificate_no">Certificate No Series</th>
-                        
-                    </tr>
-                </thead>
-                <tbody id="tableBody-5">
-                    {% for data in EngineerManagerDetails_value%}
-                    <tr data-id="{{ data.id }}">
-                        <td>{{ forloop.counter }}</td>
-                        <td><input type="text" value="{{ data.calib_engineer }}" class="no-outline" style="width: 100%;"></td>
-                        <td><input type="text" value="{{ data.quality_manager }}" class="no-outline" style="width: 100%;"></td>
-                        <td><input type="text" value="{{ data.certificate_no }}" class="no-outline" style="width: 100%;"></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table><br>
-            <button onclick="addRow('engineer_manager_details', 4)">Add New</button>
-            <div>
-                <a href="/index/">
-                    <button type="button" id="cancel-btn-4"><b>Cancel</b></button>
-                </a>
-                <button type="button" id="delete-btn" onclick="deleteSelectedRows('tableBody-5')"><b>Delete</b></button>
-                <button type="submit" id="save-btn" onclick="saveData('engineer_manager_details')"><b>Save</b></button>
-            </div>
-            </div>
        
-        </div>
     </div>     
 </div>
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
 
 <script>
-
-document.getElementById('search-input').addEventListener('input', function() {
-    const inputValue = this.value;
-    const options = document.getElementById('customers').options;
-    
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].value === inputValue) {
-            // Populate fields with the corresponding data attributes
-            document.getElementById('customer_name').value = options[i].getAttribute('value') || '';
-            document.getElementById('primary_contact_person').value = options[i].getAttribute('data-primary-contact') || '';
-            document.getElementById('secondary_contact_person').value = options[i].getAttribute('data-secondary-contact') || '';
-            document.getElementById('primary_email').value = options[i].getAttribute('data-primary-email') || '';
-            document.getElementById('secondary_email').value = options[i].getAttribute('data-secondary-email') || '';
-            document.getElementById('primary_phone_no').value = options[i].getAttribute('data-primary-phone') || '';
-            document.getElementById('secondary_phone_no').value = options[i].getAttribute('data-secondary-phone') || '';
-            document.getElementById('gst_no').value = options[i].getAttribute('data-gst') || '';
-            document.getElementById('primary_dept').value = options[i].getAttribute('data-primary_department') || '';
-            document.getElementById('secondary_dept').value = options[i].getAttribute('data-secondary_department') || '';
-            document.getElementById('address').value = options[i].getAttribute('data-address') || '';
-            break;
-        }
-    }
-});
-
-function clearValues() {
-    document.getElementById('customer_name').value = '';
-    document.getElementById('search-input').value = '';
-    document.getElementById('primary_contact_person').value = '';
-    document.getElementById('secondary_contact_person').value = '';
-    document.getElementById('primary_email').value = '';
-    document.getElementById('secondary_email').value = '';
-    document.getElementById('primary_phone_no').value = '';
-    document.getElementById('secondary_phone_no').value = '';
-    document.getElementById('gst_no').value = '';
-    document.getElementById('primary_dept').value = '';
-    document.getElementById('secondary_dept').value = '';
-    document.getElementById('address').value = '';
-}
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 function toggleTables() {
@@ -653,6 +564,48 @@ function toggleTables() {
             ringMasterDiv.style.display = 'block';
         }
     }   toggleTables2();
+
+
+
+   function toggleTables3() {
+    var probeTrace = document.getElementById('lvdt_probe_trace_radio');
+    var probeMaster = document.getElementById('lvdt_probe_master_radio');
+
+    var probeTraceTable = document.getElementById('lvdt_probe_trace');
+    var probeMasterTable = document.getElementById('lvdt_probe_master');
+
+    if (probeTrace.checked) {
+        probeTraceTable.style.display = 'block';
+        probeMasterTable.style.display = 'none';
+    } else if (probeMaster.checked) {
+        probeTraceTable.style.display = 'none';
+        probeMasterTable.style.display = 'block';
+    }
+}
+
+// run once on page load
+window.onload = toggleTables3;
+
+
+
+    function toggleTables3() {
+    const probeTraceDiv = document.getElementById('lvdt_probe_trace');
+    const probeMasterDiv = document.getElementById('lvdt_probe_master');
+
+    if (document.getElementById('lvdt_probe_trace_radio').checked) {
+        probeTraceDiv.style.display = 'block';
+        probeMasterDiv.style.display = 'none';
+    } else if (document.getElementById('lvdt_probe_master_radio').checked) {
+        probeTraceDiv.style.display = 'none';
+        probeMasterDiv.style.display = 'block';
+    }
+}
+
+// Run once on page load to show correct div
+toggleTables3();
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
    // Function to highlight and enlarge an item
@@ -769,21 +722,7 @@ function toggleDropdown(id) {
 function saveData(formType) {
     let formData = {};
 
-    if (formType === 'customer') {
-        // Collect customer form data
-        formData.customer_name = document.getElementById('customer_name').value;
-        formData.primary_contact_person = document.getElementById('primary_contact_person').value;
-        formData.secondary_contact_person = document.getElementById('secondary_contact_person').value;
-        formData.primary_email = document.getElementById('primary_email').value;
-        formData.secondary_email = document.getElementById('secondary_email').value;
-        formData.primary_phone_no = document.getElementById('primary_phone_no').value;
-        formData.secondary_phone_no = document.getElementById('secondary_phone_no').value;
-        formData.gst_no = document.getElementById('gst_no').value;
-        formData.primary_dept = document.getElementById('primary_dept').value;
-        formData.secondary_dept = document.getElementById('secondary_dept').value;
-        formData.address = document.getElementById('address').value;
-
-    }  else if (formType === 'setting_plug_trace') {
+  if (formType === 'setting_plug_trace') {
         let rows = document.getElementById('tableBody-1').getElementsByTagName('tr');
         formData.rows = [];
         for (let i = 0; i < rows.length; i++) {
@@ -850,22 +789,40 @@ else if (formType === 'setting_ring_trace') {
             formData.rows.push(rowData);
         }
 
-    } else if (formType === 'engineer_manager_details') {
-        // Collect engineer_manager_details table data
+    } 
+    else if (formType === 'lvdt_probe_trace') {
         let rows = document.getElementById('tableBody-5').getElementsByTagName('tr');
         formData.rows = [];
         for (let i = 0; i < rows.length; i++) {
             let row = rows[i];
-            
             let rowData = {
-                calibEngineer: row.cells[1].innerText|| row.cells[1].querySelector('input')?.value || '',
-                qualityManager: row.cells[2].innerText|| row.cells[2].querySelector('input')?.value || '',
-                certificateNo: row.cells[3].innerText|| row.cells[3].querySelector('input')?.value || '',
+                masterName: row.cells[1].innerText || row.cells[1].querySelector('input')?.value || '',
+                idNo: row.cells[2].innerText || row.cells[2].querySelector('input')?.value || '',
+                calibrationReportNo: row.cells[3].innerText || row.cells[3].querySelector('input')?.value || '',
+                validUpto: row.cells[4].innerText || row.cells[4].querySelector('input')?.value || '',
+                traceability: row.cells[5].innerText || row.cells[5].querySelector('input')?.value || '',
                 id: row.getAttribute('data-id') // Get the row ID if it exists
             };
             formData.rows.push(rowData);
         }
     }
+     else if (formType === 'lvdt_probe_master') {
+        // Collect setting_ring_master table data
+        let rows = document.getElementById('tableBody-6').getElementsByTagName('tr');
+        formData.rows = [];
+        for (let i = 0; i < rows.length; i++) {
+            let row = rows[i];
+            
+            let rowData = {
+                parameterName: row.cells[1].innerText|| row.cells[1].querySelector('input')?.value || '',
+                refSize: row.cells[2].innerText|| row.cells[2].querySelector('input')?.value || '',
+               
+                id: row.getAttribute('data-id') // Get the row ID if it exists
+            };
+            formData.rows.push(rowData);
+        }
+
+    } 
 
     // Log the form data and type for debugging
     console.log("formData", formData);
@@ -953,8 +910,7 @@ function getFormTypeFromSelectedRow(selectedRow) {
             return 'setting_plug_master';
         case 'tableBody-4':
             return 'setting_ring_master';
-        case 'tableBody-5':
-            return 'engineer_manager_details';
+       
         default:
             return null; // No form type detected
     }

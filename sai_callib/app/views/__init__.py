@@ -7,3 +7,5 @@ from .output import output
 from .report import report
 from .invoice import invoice
 from .keyboard import keyboard
+from .customer import customer
+from .delete_customer import delete_customer

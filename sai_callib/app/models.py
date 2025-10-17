@@ -133,3 +133,16 @@ class InterlinkData(models.Model):
         db_table = 'app_interlinkdata'   # 🔥 your exact table name
 
 
+# Setting Ring Trace model
+class LVDTprobeTrace(models.Model):
+    master_name = models.CharField(max_length=255)
+    id_no = models.CharField(max_length=50)
+    calibration_report_no = models.CharField(max_length=50)
+    valid_upto = models.CharField(max_length=50)
+    traceability = models.TextField()
+
+# Setting Plug Master model
+class LVDTprobeMaster(models.Model):
+    parameter_name = models.CharField(max_length=255)
+    ref_size = models.CharField(max_length=50)
+    

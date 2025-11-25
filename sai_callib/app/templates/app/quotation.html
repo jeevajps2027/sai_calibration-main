@@ -6,9 +6,8 @@ QUOTATION
 {% block content %}
 <style>
     #box0{
-        height: 630px;
-        width: 1200px;
-        margin-left: 20px;
+        height: 100%;
+        width: 100%;
         border: 2px solid black;
         background-color:lightgray;
         
@@ -16,27 +15,27 @@ QUOTATION
 
     label {
     display: inline-block;
-    width: 150px;
+    width: 130px;
     margin-top: 10px;
     text-align:  right;
-    margin-left: 20px;
-    font-weight: bold;
+    margin-left: 1px;
+    
     
 }
 select {
     margin-top: 10px;
     box-sizing: border-box;
-    width: 20%;
+    width: 10%;
     height: 30px;
     margin-left: 10px;
 }
 
 input{
-    margin-left: 10px;
-    width: 20%;
+    margin-left: 1px;
+    width: 10%;
 }
 #customer_address{
-    height: 100px;
+    height: 50px;
     width: 400px;
     margin-left: 30px;
     margin-top: 10px;
@@ -61,9 +60,8 @@ th{
     margin-left: 40%;
 }
 .container_box{
-    height: 380px;
-    width: 1180px;
-    margin-left: 10px;
+    height: 100%;
+    width: 100%;
     border: 2px solid black;
     background-color:lightgray;
 }
@@ -104,6 +102,7 @@ th{
     font-weight: bold;
     width: 150px;
     height: 30px;
+    margin-left: 15%;
 }
 #print_preview{
     background-color:blue;
@@ -112,6 +111,7 @@ th{
     font-size: small;
     width: 150px;
     height: 30px;
+    margin-left: 1%;
 }
 #refresh-btn1,#refresh-btn2 i {
     font-size: 20px;  /* Adjust size of the icon */
@@ -158,14 +158,62 @@ th{
     opacity: 1; /* Ensure it’s fully visible */
 }
 
+/* Make inputs and selects fill the whole table cell area */
+#tableBody-1 input,
+#tableBody-1 select {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    font-size: 14px;
+    display: block; /* Ensures full area coverage */
+}
+
+/* Remove space inside table cells */
+#tableBody-1 td {
+    padding: 0;
+    margin: 0;
+    height: 32px; /* optional: you can adjust the cell height */
+    line-height: 1; /* keeps vertical alignment tight */
+}
+
+/* Optional: make the table layout consistent */
+#tableBody-1 {
+    border-collapse: collapse;
+}
+
+
+/* Hover and select on <td> so it appears behind inputs */
+#tableBody-1 tr:hover td {
+    background-color: #e6f2ff !important; /* Light blue hover */
+}
+
+#tableBody-1 tr.selected-row td {
+    border: 2px solid red !important; /* Red border */
+    box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.7); /* Red glow around cells */
+    
+    transition: all 0.2s ease-in-out;
+}
+
+
 
 </style>
 
 <div id="notification"></div>
 
 <div class="box0" id="box0">
-    <h3 style="margin-left: 45%;"><b>QUOTATION</b></h3>
-    <label for="search" style="width: 180px;margin-top: 20px;margin-left: 0px;">SEARCH CUSTOMER :</label>
+    <div class="heading" style="display: flex;">
+        <h3 style="margin-left: 45%;"><b>QUOTATION</b></h3>
+        <button type="submit" id="create_btn"> CREATE NEW</button>
+         <button type="submit" id="print_preview"  onclick="redirectToInvoice()"> PROFORMA INVOICE</button>
+    </div>
+
+    <div class="1st_container" style="display: flex;">
+        <label for="search" style="width: 100px;margin-top: 10px;margin-left: 0px;">CUSTOMER:</label>
                 <input list="customers" id="search-input" style="width: 400px;" onkeyup="fetchWorkOrders()">
                     <datalist id="customers">
                         {% for customer in customer_value %}
@@ -175,63 +223,79 @@ th{
                     </option>
                         {% endfor %}
                     </datalist>
-    <button type="button" id="refresh-btn1" style="border: none; background: none; cursor: pointer;">
-        <i class="fa fa-refresh"></i>
-    </button>
+        <button type="button" id="refresh-btn1" style="border: none; background: none; cursor: pointer;">
+            <i class="fa fa-refresh"></i>
+        </button>
+
+        <label for="order_type" style="margin-left: 1px;">ORDER TYPE :</label>
+        <select  id="order_type" >
+            <option>SALES</option>
+            <option>SERVICE</option>
+            <option>CALIBRATIONS</option>
+        </select>
+
+        <label for="quote_no" style="margin-left: -10px;">QUOT NO :</label>
+        <input list="quote_no_datalist" id="quote_no" name="quote_no">
+        <datalist id="quote_no_datalist"></datalist>
+        <button type="button" id="refresh-btn2" style="border: none; background: none; cursor: pointer;">
+            <i class="fa fa-refresh"></i>
+        </button>
+        <label for="quote_date"  style="margin-left: -10px;" >QUOT DATE :</label>
+        <input type="date" id="quote_date">
+    </div>
+
+
+    <div class="2nd_container" style="display: flex;">
+        <textarea id="customer_address"></textarea>
+        <label for="enquiry_type" style="margin-left: 20px;width: 160px;">ENQUIRY TYPE :</label>
+        <select  id="enquiry_type" >
+            <option>EMAIL</option>
+            <option>DIRECT</option>
+            <option>REF</option>
+        </select>
+    
+        
+        <label for="enquiry_date" style="width: 150px;margin-left: 10px;height: 50px;">ENQUIRY DATE :</label>
+        <input type="date" id="enquiry_date" >
+
+        
+       
+
+    </div>
+    
+    
                     
                
-    <label for="next_calibration" style="margin-left: 0px;">ORDER TYPE :</label>
-    <select  id="next_calibration" >
-        <option>SALES</option>
-        <option>SERVICE</option>
-        <option>CALIBRATIONS</option>
-    </select>
-    
-    <button type="submit" id="create_btn"> CREATE NEW</button><br>
     
     
     
-    <label for="quote_no" style="margin-left: 30px;">QUOTATION NO :</label>
-    <input list="work_order_datalist" id="quote_no" name="quote_no">
-    <datalist id="work_order_datalist"></datalist>
-    <button type="button" id="refresh-btn2" style="border: none; background: none; cursor: pointer;">
-        <i class="fa fa-refresh"></i>
-    </button>
-
-    <label for="quote_date"  style="margin-left: 160px;" >QUOTATION DATE :</label>
-    <input type="date" id="quote_date">
     
-    <button type="submit" id="print_preview"  onclick="redirectToInvoice()"> PROFORMA INVOICE</button><br>
-
-    <label for="enquiry_type" style="margin-left: 20px;width: 160px;">ENQUIRY TYPE :</label>
-    <select  id="enquiry_type" >
-        <option>EMAIL</option>
-        <option>DIRECT</option>
-        <option>REF</option>
-    </select>
-   
     
-    <label for="enquiry_date" style="width: 180px;margin-left: 160px;">ENQUIRY DATE :</label>
-    <input type="date" id="enquiry_date" ><br>
 
     
-    <textarea id="customer_address"></textarea><br>
+    
+    
+    
 
     <div class="container_box" style="overflow-y: auto;">
-    <div id="setting_plug_trace">
+    <div id="quotation_table">
         <table border="1">
             <thead>
                 <tr>
                     <th >Sr.No</th>
-                    <th style="width: 15%;">Item Type</th>
-                    <th>Model No</th>
-                    <th>Item Type</th>
-                    <th>No of Jets</th>
-                    <th style="width: 10%;">No of Level</th>
-                    <th>Type</th>
-                    <th>Make</th>
-                    <th style="width: 5%;">Channels</th>
-                    <th style="width: 5%;">Check box</th>
+                    <th style="width: 10%;">ITEM</th>
+                    <th style="width: 15%;">ITEM TYPE</th>
+                    <th>MODEL NO</th>
+                    <th>NO.OF.JET</th>
+                    <th >NO.OF.LEVEL</th>
+                    <th>TYPE</th>
+                    <th>MAKE</th>
+                    <th >UNIT</th>
+                    <th>PRICE</th>
+                    <th>DISC % </th>
+                    <th>DISC RS </th>
+                    <th> AMOUNT</th>
+                   
                 </tr>
             </thead>
             <tbody id="tableBody-1">
@@ -240,7 +304,7 @@ th{
             
         </table>
         <br>
-        <button  id="add_new_btn" onclick="addRow('setting_plug_trace', 11)">Add New</button>
+        <button  id="add_new_btn" onclick="addRow('quotation_table', 13)">Add New</button>
         <div id="control_btn_div"> 
             <a href="/index/">
                 <button type="button" id="cancel-btn">BACK</button>
@@ -287,8 +351,15 @@ document.getElementById('refresh-btn2').addEventListener('click', function() {
     document.getElementById('tableBody-1').innerHTML = ''; 
 });
 
-///////////////////////////////////////////////////////////////////////////
 
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////
 
 var rowData = {};
 
@@ -300,75 +371,105 @@ function addRow(tableId, numColumns) {
     newRow.setAttribute('data-new', 'true');
 
     // Get the work_order_no input value
-    var workOrderNo = document.getElementById('work_order_no').value;
+    var workOrderNo = document.getElementById('work_order_no') ? document.getElementById('work_order_no').value : "WO";
 
     // Calculate the new Sr.No based on the work_order_no
-    var serialSuffix = String(tableBody.rows.length).padStart(2, '0');  // e.g., "01", "02", etc.
-    var serialNumber = workOrderNo + '/' + serialSuffix;  // e.g., "SAI/CAL/24-25/001/01"
+    var serialSuffix = String(tableBody.rows.length).padStart(2, '0');  
+    var serialNumber = workOrderNo + '/' + serialSuffix;
 
     // Add click event to highlight the row on click
     newRow.addEventListener('click', function(event) {
         var rows = tableBody.querySelectorAll('tr');
         rows.forEach(function(row) {
-            row.style.backgroundColor = '';  // Reset background color for all rows
+            row.style.backgroundColor = '';
         });
-        event.currentTarget.style.backgroundColor = 'red';  // Set background color for the clicked row
+        event.currentTarget.style.backgroundColor = 'red';
     });
 
     for (var i = 0; i < numColumns; i++) {
         var cell = newRow.insertCell(i);
 
-        if (i === 0) { // Sr.No column (index 0)
+        // Sr.No column
+        if (i === 0) {
             cell.textContent = serialNumber;
-        } else if (i === 5) { // Range column (index 5)
-            var selectRange = document.createElement('select');
-            selectRange.style.width = '100%';
-            selectRange.style.marginLeft = '0px';
-            selectRange.style.marginTop = '0px';
-            selectRange.innerHTML = `
-                <option value="">Select Range</option>
-                <option value="± 1 mm" >± 1 mm</option>
-                <option value="± 2 mm" >± 2 mm</option>
-                <option value="± 20 um" >± 20 um</option>
-                <option value="± 40 um" >± 40 um</option>
+        }
+        // ITEM
+        else if (i === 1) {
+            var selectItem = document.createElement('select');
+            selectItem.style.width = '100%';
+            selectItem.innerHTML = `
+                <option value="">Select Item</option>
+                <option value="Measurement">Measurement</option>
+                <option value="Gauges">Gauges</option>
             `;
-            cell.appendChild(selectRange);
-        } else if (i === 7) { // Channels column (index 7)
-            var selectChannels = document.createElement('select');
-            selectChannels.style.width = '100%';
-            selectChannels.style.marginLeft = '0px';
-            selectChannels.style.marginTop = '0px';
-            selectChannels.innerHTML = `
-                <option value="">Select Channels</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
+            cell.appendChild(selectItem);
+        }
+        // ITEM TYPE
+        else if (i === 2) {
+            var selectType = document.createElement('select');
+            selectType.style.width = '100%';
+            selectType.innerHTML = `
+                <option value="">Select Type</option>
+                <option value="APG">APG</option>
+                <option value="ARG">ARG</option>
+                <option value="ASP">ASP</option>
             `;
-            cell.appendChild(selectChannels);
-        }else if (i === 8) { // Check box column (index 8)
-            var checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.disabled = true; // Makes the checkbox read-only
-            checkbox.style.width = '100%';
-            checkbox.style.margin = '0 auto';
-            cell.appendChild(checkbox);
-        } else {
-            // For all other columns, add a normal text input
+            cell.appendChild(selectType);
+        }
+        // MODEL NO
+        else if (i === 3) {
             var input = document.createElement('input');
             input.type = 'text';
             input.style.width = '100%';
-            input.style.marginLeft = '0';
-            input.style.padding = '0';
+            cell.appendChild(input);
+        }
+        // NO.OF.LEVEL
+        else if (i === 4) {
+            var selectLevel = document.createElement('select');
+            selectLevel.style.width = '100%';
+            selectLevel.innerHTML = `
+                <option value="">Select Level</option>
+                <option value="2 Level">2 Level</option>
+                <option value="3 Level">3 Level</option>
+                <option value="4 Level">4 Level</option>
+            `;
+            cell.appendChild(selectLevel);
+        }
+        // NO.OF.JET
+        else if (i === 5) {
+            var selectJet = document.createElement('select');
+            selectJet.style.width = '100%';
+            selectJet.innerHTML = `
+                <option value="">Select Jet</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            `;
+            cell.appendChild(selectJet);
+        }
+        // TYPE
+        else if (i === 6) {
+            var selectMount = document.createElement('select');
+            selectMount.style.width = '100%';
+            selectMount.innerHTML = `
+                <option value="">Select Mount Type</option>
+                <option value="Hand Mounted">Hand Mounted</option>
+                <option value="Bench Mounted">Bench Mounted</option>
+            `;
+            cell.appendChild(selectMount);
+        }
+        // Remaining columns (MAKE, UNIT, PRICE, DISC %, DISC RS, AMOUNT)
+        else {
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.style.width = '100%';
             input.style.border = 'none';
             input.style.outline = 'none';
             cell.appendChild(input);
         }
     }
 
-    // Initialize the rowData for the new row
+    // Save row data
     if (!rowData[tableId]) {
         rowData[tableId] = [];
     }
@@ -376,26 +477,25 @@ function addRow(tableId, numColumns) {
         rowIndex: newRow.rowIndex,
         values: Array.from(newRow.cells).map(cell => {
             var inputElement = cell.querySelector('input, select');
-            return inputElement ? inputElement.value : '';  // Check if input exists
+            return inputElement ? inputElement.value : '';
         })
     });
+
+    // Attach calculation events for this new row
+    attachRowEvents(newRow);
 }
 
-
 /////////////////////////////////////////////////////////////////////////
-
+// Customer search code (unchanged)
 document.getElementById('search-input').addEventListener('input', function() {
     const inputValue = this.value;
     const options = document.getElementById('customers').options;
     
     for (let i = 0; i < options.length; i++) {
         if (options[i].value === inputValue) {
-            // Get the customer name, address, and primary email
-            const customerName = options[i].value; // customer name
-            const address = options[i].getAttribute('data-address') || ''; // address
-            const primaryEmail = options[i].getAttribute('data-primary-email') || ''; // primary email
-
-            // Combine these into a single string
+            const customerName = options[i].value;
+            const address = options[i].getAttribute('data-address') || '';
+            const primaryEmail = options[i].getAttribute('data-primary-email') || '';
             document.getElementById('customer_address').value = 
                 ` ${customerName}\n ${address}\n ${primaryEmail}`;
             break;
@@ -404,109 +504,133 @@ document.getElementById('search-input').addEventListener('input', function() {
 });
 /////////////////////////////////////////////////////////////////////////
 
+// =================== LIVE CALCULATION FUNCTIONS ===================
 
-// Track the selected row ID
-let selectedRowId = null;
+// Update AMOUNT
+function updateAmount(row) {
+    const price = parseFloat(row.querySelector('td:nth-child(10) input').value) || 0;
+    const discRS = parseFloat(row.querySelector('td:nth-child(12) input').value) || 0;
+    row.querySelector('td:nth-child(13) input').value = (price - discRS).toFixed(2);
+}
 
-// Function to select row and change background color to green
-$(document).on('click', '#tableBody-1 tr', function() {
-    // Remove highlight from previously selected row
-    $('#tableBody-1 tr').removeClass('selected-row');
-    
-    // Add highlight (green background) to the clicked row
-    $(this).addClass('selected-row');
-    
-    // Get the row ID from data-row-id attribute
-    selectedRowId = $(this).data('row-id');
-    
-    // Log the selected row ID to the console
-    console.log("Selected Row ID:", selectedRowId);
+// Update DISC RS based on %
+function updateDiscountRS(row) {
+    const price = parseFloat(row.querySelector('td:nth-child(10) input').value) || 0;
+    const discPercent = parseFloat(row.querySelector('td:nth-child(11) input').value) || 0;
+    row.querySelector('td:nth-child(12) input').value = ((price * discPercent) / 100).toFixed(2);
+    updateAmount(row);
+}
 
-    // Enable inline editing of cells in the selected row
-    $(this).find('td').each(function(index) {
-        // Check if the cell is not already in edit mode
-        if (!$(this).hasClass('editing')) {
-            // For the Range column (6th cell, index 5)
-            if (index === 5) {
-                const selectRange = document.createElement('select');
-                selectRange.style.width = '100%';
-                selectRange.style.margin = '0px';
-                selectRange.innerHTML = `
-                    <option value="">Select Range</option>
-                    <option value="± 1 mm">± 1 mm</option>
-                    <option value="± 2 mm">± 2 mm</option>
-                    <option value="± 20 um">± 20 um</option>
-                    <option value="± 40 um">± 40 um</option>
-                `;
-                
-                // Set the selected option based on the existing cell value
-                selectRange.value = $(this).text().trim();
-                $(this).html(selectRange);
-            }
-            // For the Channels column (8th cell, index 7)
-            else if (index === 7) {
-                const selectChannels = document.createElement('select');
-                selectChannels.style.width = '100%';
-                selectChannels.style.margin = '0px';
-                selectChannels.innerHTML = `
-                    <option value="">Select Channels</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                `;
-                
-                // Set the selected option based on the existing cell value
-                selectChannels.value = $(this).text().trim();
-                $(this).html(selectChannels);
-            } 
-            else if (index === 8) { // Check box column (index 8)
-            var checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.disabled = true; // Makes the checkbox read-only
-            checkbox.style.width = '100%';
-            checkbox.style.margin = '0 auto';
-            cell.appendChild(checkbox);
-        } 
-            // For other cells, including the first column (inward_no)
-            else {
-                const cellValue = $(this).text().trim();
-                $(this).html(`<input type="text" value="${cellValue}" class="edit-cell">`);
-            }
-            $(this).addClass('editing');  // Mark the cell as being edited
-        }
-    });
+// Function to update DISC % based on RS
+function updateDiscountPercent(row) {
+    const price = parseFloat(row.querySelector('td:nth-child(10) input').value) || 0;
+    const discRS = parseFloat(row.querySelector('td:nth-child(12) input').value) || 0;
+    const discPercentInput = row.querySelector('td:nth-child(11) input');
+
+    let percentValue = price ? ((discRS / price) * 100).toFixed(2) : 0;
+    
+    // Display with % symbol as suffix
+    discPercentInput.value = percentValue + '%';
+
+    // Update Amount just in case
+    updateAmount(row);
+}
+
+// Remove % symbol while editing
+$(document).on('focus', 'td:nth-child(11) input', function() {
+    this.value = this.value.replace('%', '');
 });
 
-// Function to collect the input values correctly
+// Re-add % symbol on blur
+$(document).on('blur', 'td:nth-child(11) input', function() {
+    if (this.value !== '') {
+        this.value = parseFloat(this.value).toFixed(2) + '%';
+        // Update DISC RS based on new %
+        const row = $(this).closest('tr')[0];
+        const price = parseFloat(row.querySelector('td:nth-child(10) input').value) || 0;
+        const percent = parseFloat(this.value) || 0;
+        row.querySelector('td:nth-child(12) input').value = ((price * percent) / 100).toFixed(2);
+        updateAmount(row);
+    }
+});
+
+
+// Attach events to a row
+function attachRowEvents(row) {
+    const priceInput = row.querySelector('td:nth-child(10) input');
+    const discPercentInput = row.querySelector('td:nth-child(11) input');
+    const discRSInput = row.querySelector('td:nth-child(12) input');
+
+    priceInput.addEventListener('input', function() {
+        updateAmount(row);
+        updateDiscountRS(row);
+    });
+
+    discPercentInput.addEventListener('input', function() {
+        updateDiscountRS(row);
+    });
+
+    discRSInput.addEventListener('input', function() {
+        updateDiscountPercent(row);
+    });
+}
+
+/////////////////////////////////////////////////////////////////////////
+// Row click highlight & inline editing (unchanged)
+let selectedRowId = null;
+$(document).on('click', '#tableBody-1 tr', function() {
+    $('#tableBody-1 tr').removeClass('selected-row');
+    $(this).addClass('selected-row');
+    selectedRowId = $(this).data('row-id');
+
+    $(this).find('td').each(function(index) {
+        if (!$(this).hasClass('editing')) {
+            const value = $(this).text().trim();
+            if(index === 1 || index === 2 || index === 4 || index === 5 || index === 6) {
+                // Already handled as selects in addRow()
+            } else if(index >= 3 && index <= 13){
+                $(this).html(`<input type="text" value="${value}" class="edit-cell">`);
+            }
+            $(this).addClass('editing');
+        }
+    });
+
+    attachRowEvents(this); // ensure events attach when row clicked
+});
+
+/////////////////////////////////////////////////////////////////////////
+// Function to collect all table data
 function collectData() {
     let tableRows = [];
     $('#tableBody-1 tr').each(function() {
-        var row = $(this);
-        var rowData = {
-            inward_no: row.find('td:nth-child(1) input').length ? row.find('td:nth-child(1) input').val() : row.find('td:nth-child(1)').text().trim(),
-            item: row.find('td:nth-child(2) input').val(),
-            hsn: row.find('td:nth-child(3) input').val(),
-            srNo: row.find('td:nth-child(4) input').val(),
-            idNo: row.find('td:nth-child(5) input').val(),
-            range: row.find('td:nth-child(6) select').val(),
-            make: row.find('td:nth-child(7) input').val(),
-            channels: row.find('td:nth-child(8) select').val()
+        const row = $(this);
+        const rowData = {
+            sr_no: row.find('td:nth-child(1)').text().trim(),
+            item: row.find('td:nth-child(2) select').length ? row.find('td:nth-child(2) select').val() : row.find('td:nth-child(2) input').val(),
+            item_type: row.find('td:nth-child(3) select').length ? row.find('td:nth-child(3) select').val() : row.find('td:nth-child(3) input').val(),
+            model_no: row.find('td:nth-child(4) input').val(),
+            no_of_level: row.find('td:nth-child(5) select').length ? row.find('td:nth-child(5) select').val() : row.find('td:nth-child(5) input').val(),
+            no_of_jet: row.find('td:nth-child(6) select').length ? row.find('td:nth-child(6) select').val() : row.find('td:nth-child(6) input').val(),
+            type: row.find('td:nth-child(7) select').length ? row.find('td:nth-child(7) select').val() : row.find('td:nth-child(7) input').val(),
+            make: row.find('td:nth-child(8) input').val(),
+            unit: row.find('td:nth-child(9) input').val(),
+            price: row.find('td:nth-child(10) input').val(),
+            discount_percent: row.find('td:nth-child(11) input').val(),
+            discount_rs: row.find('td:nth-child(12) input').val(),
+            amount: row.find('td:nth-child(13) input').val()
         };
-        
-        // Only push rows with a valid inward_no or item value to avoid empty entries
-        if (rowData.inward_no || rowData.item) {
+
+        if (rowData.item || rowData.model_no) {
             tableRows.push(rowData);
         }
     });
 
-    // Log the collected data to the console
     console.log("Collected Data:", tableRows);
-    
     return tableRows;
 }
+
+
+
 
 
 

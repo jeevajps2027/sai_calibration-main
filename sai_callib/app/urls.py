@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.urls import path,include
 from django.conf.urls.static import static
-from .views import login,master,index,calib,output,inward,report,invoice,keyboard,customer,delete_customer
+from .views import login,master,index,calib,output,inward,report,invoice,keyboard,customer,delete_customer,quotation
 
 
 urlpatterns = [
@@ -16,6 +16,8 @@ urlpatterns = [
     path('keyboard/',keyboard,name="keyboard"),
      path('customer/',customer,name="customer"),
       path('delete_customer/',delete_customer,name="delete_customer"),
+      path('quotation/',quotation,name="quotation"),
+      
     ]
 
 if settings.DEBUG:

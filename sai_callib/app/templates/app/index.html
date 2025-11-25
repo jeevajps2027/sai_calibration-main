@@ -152,6 +152,7 @@ body {
 
 </style>
 <div class="container1">
+  
   <button type="submit" id="logout_btn">Log Out</button>
   
   <div class="container1_1">
@@ -214,5 +215,10 @@ body {
 
 <div class="container3"></div>
 <div class="container4"></div>
+<script>
+  document.getElementById('logout_btn').addEventListener("click",function(){
+    window.location.href = "{% url 'login' %}";
+  })
+</script>
 
 {% endblock content %}

@@ -1,42 +1,75 @@
 import os
 import sys
-import subprocess
+import threading
+import time
+import requests
+import webview  # Import PyWebView
+from django.core.management import execute_from_command_line
 
-# def map_network_drive():
-#     # Full path to net.exe
-#     net_path = r'C:\Windows\System32\net.exe'
+# Global event to signal server shutdown
+stop_event = threading.Event()
 
-#     # Step 1: Disconnect all existing connections to any network drives
-#     print("Disconnecting all existing network connections...")
-#     disconnect_cmd = f'cmd /c "{net_path} use * /delete /yes"'
-#     subprocess.run(disconnect_cmd, shell=True)
+class Api:
+    def shutdown(self):
+        """Shutdown Django server and close PyWebView."""
+        print("Shutting down...")
+        stop_event.set()
+        os._exit(0)  # Forcefully exit the program
 
-#     # Step 2: Delete Z: mapping if exists
-#     print("Deleting existing Z: mapping (if any)...")
-#     del_cmd = f'cmd /c "{net_path} use Z: /delete /yes"'
-#     subprocess.run(del_cmd, shell=True)
-
-#     # Step 3: Map new Z: drive
-#     print("Mapping Z: drive to \\\\raspberrypi\\four_channel_db ...")
-#     map_cmd = f'cmd /c "{net_path} use Z: \\\\raspberrypi\\four_channel_db /user:sai sai@123 /persistent:yes"'
-#     result = subprocess.run(map_cmd, shell=True)
-
-#     if result.returncode != 0:
-#         print("❌ Error: Failed to map Z: drive. Please check credentials or network path.")
-#         sys.exit(1)
-#     else:
-#         print("✅ Z: drive mapped successfully.")
-
-def main():
-    # map_network_drive()
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sai_calibrations.settings')
-    try:
-        from django.core.management import execute_from_command_line
-    except ImportError as exc:
-        raise ImportError(
-            "Couldn't import Django. Make sure it's installed and your virtual environment is active."
-        ) from exc
+def migrate_database():
+    """Run Django migrations before starting the server."""
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project_me.settings")
+    sys.argv = ["manage.py", "makemigrations"]
     execute_from_command_line(sys.argv)
 
-if __name__ == '__main__':
-    main()
+    sys.argv = ["manage.py", "migrate"]
+    execute_from_command_line(sys.argv)
+
+def start_django_server():
+    """Start Django server in a separate thread."""
+    migrate_database()
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project_me.settings")
+    sys.argv = ["manage.py", "runserver", "--noreload"]
+
+    while not stop_event.is_set():
+        try:
+            execute_from_command_line(sys.argv)
+        except SystemExit:
+            break  # Exit loop when stop_event is set
+
+def wait_for_server():
+    """Wait until Django server starts."""
+    url = "http://127.0.0.1:8000/"
+    print("Waiting for Django server to start...")
+
+    while True:
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                print("Django server is running.")
+                break
+        except requests.ConnectionError:
+            pass
+        time.sleep(1)  # Retry every second
+
+if __name__ == "__main__":
+    # Start Django server in a separate thread
+    django_thread = threading.Thread(target=start_django_server)
+    django_thread.daemon = True
+    django_thread.start()
+
+    # Wait for the Django server to start
+    wait_for_server()
+
+    # Create API instance
+    api = Api()
+
+    # Open the webpage in Full-Screen Mode with API
+    webview.create_window(
+        "MULTI CHANNEL WITH ANGLE",
+        "http://127.0.0.1:8000/",
+        fullscreen=True,
+        js_api=api  # Expose shutdown API to JavaScript
+    )
+     
+    webview.start()

@@ -237,10 +237,21 @@ th{
    width:150px ;
    font-size: small;
    font-weight: bold;
-   margin-left: 80%;
+   margin-left: 70%;
 }
 #btn_div{
+    display: flex;
     margin-top: -30px; 
+   
+   
+}
+#back_btn{
+    background-color: red;
+     height: 30px;
+   width:150px ;
+   margin-left: 10px;
+   color: white;
+   font-weight: bold;
 }
 
 #ok_button_Ring,#ok_button_plug,#ok_button_lvdt{
@@ -256,7 +267,15 @@ th{
 <div class="box-0" id="box0" style="overflow-x: auto;overflow-y:auto;">
     
     <center id="heading">CALIBRATION PAGE</center>
-    <div id="btn_div"><button type="submit" id="create_btn"> CREATE NEW</button></div>
+    <div id="btn_div">
+        <button type="submit" id="create_btn"> CREATE NEW</button>
+         <a href="/index/">
+            <button type="submit" id="back_btn">BACK</button>
+        </a>
+        
+    </div>
+   
+
     
 
     <div style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
